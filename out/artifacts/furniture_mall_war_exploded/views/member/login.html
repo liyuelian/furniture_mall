@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
     <title>家居网购</title>
+    <!--为了确定页面的固定资源，使用一个固定的参考路径，后面再优化-->
+    <base href="/furniture_mall/">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <link rel="stylesheet" href="../../assets/css/vendor/vendor.min.css"/>
-    <link rel="stylesheet" href="../../assets/css/plugins/plugins.min.css"/>
-    <link rel="stylesheet" href="../../assets/css/style.min.css"/>
+    <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
+    <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
+    <link rel="stylesheet" href="assets/css/style.min.css"/>
     <!--这里先使用相对路径，后面再修改，使用base-->
     <!--引入jquery-->
-    <script type="text/javascript" src="../../script/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
         $(function () {//页面加载完毕后执行的function
             //直接在页面的structure结构中找到对应的注册接口==>id="sub-btn"
@@ -62,10 +64,11 @@
                 }
 
                 //如果上面的信息格式都正确，就可以提交表单信息了
-                // return true;
                 //因为还没有写后台代码，这里暂时使用提示信息表示
                 $("span.errorMsg").text("验证通过...");
-                return false;
+
+                //目前我们写了后台，当用户验证通过时，返回true
+                return true;
             })
         })
     </script>
@@ -83,7 +86,7 @@
                 <!-- Header Logo Start -->
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
-                        <a href="../../index.html"><img src="../../assets/images/logo/logo.png" alt="Site Logo"/></a>
+                        <a href="index.html"><img src="assets/images/logo/logo.png" alt="Site Logo"/></a>
                     </div>
                 </div>
                 <!-- Header Logo End -->
@@ -98,7 +101,7 @@
                 <!-- Header Logo Start -->
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
-                        <a href="index.html"><img width="280px" src="../../assets/images/logo/logo.png"
+                        <a href="index.html"><img width="280px" src="assets/images/logo/logo.png"
                                                   alt="Site Logo"/></a>
                     </div>
                 </div>
@@ -149,11 +152,12 @@
                                 <div class="login-register-form">
                                     <span class="errorMsg"
                                           style="float: right; font-weight: bold; font-size: 20pt; margin-left: 10px;"></span>
-                                    <form action="#" method="post">
-                                        <input type="text" id="username" name="user-name" placeholder="Username"/>
-                                        <input type="password" id="password" name="user-password" placeholder="输入密码"/>
-                                        <input type="password" id="repwd" name="user-password" placeholder="确认密码"/>
-                                        <input name="user-email" id="email" placeholder="电子邮件" type="email"/>
+                                    <!--注册表单-->
+                                    <form action="registerServlet" method="post">
+                                        <input type="text" id="username" name="username" placeholder="Username"/>
+                                        <input type="password" id="password" name="password" placeholder="输入密码"/>
+                                        <input type="password" id="repwd" name="repassword" placeholder="确认密码"/>
+                                        <input name="email" id="email" placeholder="电子邮件" type="email"/>
                                         <input type="text" id="code" name="user-name" style="width: 50%" id="code"
                                                placeholder="验证码"/>　　<img alt="" src="../../assets/images/code/code.bmp">
                                         <div class="button-box">
@@ -242,9 +246,9 @@
     </div>
 </div>
 <!-- Footer Area End -->
-<script src="../../assets/js/vendor/vendor.min.js"></script>
-<script src="../../assets/js/plugins/plugins.min.js"></script>
+<script src="assets/js/vendor/vendor.min.js"></script>
+<script src="assets/js/plugins/plugins.min.js"></script>
 <!-- Main Js -->
-<script src="../../assets/js/main.js"></script>
+<script src="assets/js/main.js"></script>
 </body>
 </html>
