@@ -13,6 +13,20 @@ public class MemberServiceImpl implements MemberService {
     //定义一个MemberDAO属性，它指向它的实现类
     private MemberDAO memberDAO = new MemberDAOImpl();
 
+
+    /**
+     * 根据登录传入的member信息，返回对应的在数据库中的member对象
+     *
+     * @param member
+     * @return 返回的是数据库中的member对象，若不存在则返回null
+     */
+    @Override
+    public Member login(Member member) {
+        //返回对象
+        return memberDAO.queryMemberByUsernameAndPassword
+                (member.getUsername(), member.getPassword());
+    }
+
     @Override
     public boolean registerMember(Member member) {
         //saveMember方法返回1，代表保存成功，就返回true，否则返回false

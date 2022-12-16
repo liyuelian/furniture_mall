@@ -41,7 +41,7 @@ public class RegisterServlet extends HttpServlet {
         } else {//否则不能进行注册
             //请求转发到login.html
             //后面可以加入提示信息
-            request.getRequestDispatcher("/views/member/login.html")
+            request.getRequestDispatcher("/views/member/login.jsp")
                     .forward(request, response);
         }
     }

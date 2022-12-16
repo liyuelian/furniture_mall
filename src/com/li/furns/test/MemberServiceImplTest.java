@@ -20,8 +20,9 @@ public class MemberServiceImplTest {
             System.out.println("用户不存在");
         }
     }
+
     @Test
-    public void registerMember(){
+    public void registerMember() {
         //构建一个Member对象
         Member member = new Member(null, "queen", "queen", "queen@163.com");
         if (memberService.registerMember(member)) {
@@ -29,5 +30,12 @@ public class MemberServiceImplTest {
         } else {
             System.out.println("用户注册失败");
         }
+    }
+
+    @Test
+    public void login() {
+        Member member = memberService.login
+                (new Member(null, "admin", "admin", null));
+        System.out.println("member=" + member);
     }
 }

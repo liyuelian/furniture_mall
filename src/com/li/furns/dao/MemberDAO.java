@@ -7,6 +7,8 @@ import com.li.furns.entity.Member;
  * @version 1.0
  */
 public interface MemberDAO {
+    //提供一个通过用户名和密码返回对应的Member的方法
+    public Member queryMemberByUsernameAndPassword(String username,String password);
 
     //提供一个通过用户名返回对应的Member的方法
     public Member queryMemberByUsername(String username);

@@ -1,3 +1,4 @@
+<%@page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,8 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
     <title>家居网购</title>
     <!--为了确定页面的固定资源，使用一个固定的参考路径，后面再优化-->
-    <base href="/furniture_mall/">
+    <%--优化：jsp页面表达式--%>
+    <base href="<%=request.getContextPath()+"/"%>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
@@ -132,9 +134,14 @@
                         <div id="lg1" class="tab-pane active">
                             <div class="login-form-container">
                                 <div class="login-register-form">
-                                    <form action="#" method="post">
-                                        <input type="text" name="user-name" placeholder="Username"/>
-                                        <input type="password" name="user-password" placeholder="Password"/>
+                                    <%--提示错误信息--%>
+                                    <span class="errorMsg"
+                                          style="float: right; font-weight: bold; font-size: 20pt; margin-left: 10px;">
+                                        ${requestScope.errInfo}
+                                    </span>
+                                    <form action="loginServlet" method="post">
+                                        <input type="text" name="username" placeholder="Username" value="${requestScope.username}"/>
+                                        <input type="password" name="password" placeholder="Password"/>
                                         <div class="button-box">
                                             <div class="login-toggle-btn">
                                                 <input type="checkbox"/>
@@ -212,7 +219,7 @@
                                         <li class="li"><a class="single-link" href="my-account.html">我的账号</a>
                                         </li>
                                         <li class="li"><a class="single-link" href="cart.html">我的购物车</a></li>
-                                        <li class="li"><a class="single-link" href="login.html">登录</a></li>
+                                        <li class="li"><a class="single-link" href="login.jsp">登录</a></li>
                                         <li class="li"><a class="single-link" href="wishlist.html">感兴趣的</a></li>
                                         <li class="li"><a class="single-link" href="checkout.html">结账</a></li>
                                     </ul>

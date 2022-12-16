@@ -11,6 +11,19 @@ import com.li.furns.entity.Member;
 public class MemberDAOImpl extends BasicDAO<Member> implements MemberDAO {
 
     /**
+     * 通过用户名和密码返回对应的Member对象
+     *
+     * @param username 用户名
+     * @param password 密码
+     * @return 返回值为对应的Member对象，如果不存在则返回null
+     */
+    @Override
+    public Member queryMemberByUsernameAndPassword(String username, String password) {
+        String sql = "SELECT * FROM `member` WHERE `username`=? AND `password`=MD5(?);";
+        return querySingle(sql, Member.class, username, password);
+    }
+
+    /**
      * 通过用户名返回对应的Member
      *
      * @param username 用户名
