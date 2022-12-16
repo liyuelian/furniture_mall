@@ -139,7 +139,9 @@
                                           style="float: right; font-weight: bold; font-size: 20pt; margin-left: 10px;">
                                         ${requestScope.errInfo}
                                     </span>
-                                    <form action="loginServlet" method="post">
+                                    <form action="memberServlet" method="post">
+                                        <%--增加隐藏域，表示login请求--%>
+                                        <input type="hidden" name="action" value="login"/>
                                         <input type="text" name="username" placeholder="Username" value="${requestScope.username}"/>
                                         <input type="password" name="password" placeholder="Password"/>
                                         <div class="button-box">
@@ -160,7 +162,9 @@
                                     <span class="errorMsg"
                                           style="float: right; font-weight: bold; font-size: 20pt; margin-left: 10px;"></span>
                                     <!--注册表单-->
-                                    <form action="registerServlet" method="post">
+                                    <form action="memberServlet" method="post">
+                                        <%--增加隐藏域，表示register请求--%>
+                                        <input type="hidden" name="action" value="register"/>
                                         <input type="text" id="username" name="username" placeholder="Username"/>
                                         <input type="password" id="password" name="password" placeholder="输入密码"/>
                                         <input type="password" id="repwd" name="repassword" placeholder="确认密码"/>
