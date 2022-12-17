@@ -29,4 +29,23 @@
         <servlet-name>MemberServlet</servlet-name>
         <url-pattern>/memberServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>com.li.furns.web.AdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/adminServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>FurnServlet</servlet-name>
+        <servlet-class>com.li.furns.web.FurnServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FurnServlet</servlet-name>
+        <!--url-pattern这样写是为了过滤器可以更好限制访问权限-->
+        <url-pattern>/manage/furnServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

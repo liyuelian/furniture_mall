@@ -47,4 +47,9 @@ public abstract class BasicServlet extends HttpServlet {
         }
     }
 
+    //在BasicServlet中增加doGet请求
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doPost(req, resp);
+    }
 }
