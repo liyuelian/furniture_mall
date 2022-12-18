@@ -11,4 +11,11 @@ import java.util.List;
 public interface FurnDAO {
     //返回所有的家居信息的集合，后面再考虑分页
     public List<Furn> queryFurns();
+
+    /**
+     * 将传入的Furn对象，保存到数据库
+     * @param furn Furn对象
+     * @return 返回受影响的表行数，失败则返回-1
+     */
+    public int addFurn(Furn furn);
 }

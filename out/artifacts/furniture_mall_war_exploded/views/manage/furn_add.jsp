@@ -1,16 +1,87 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html;charset=utf-8" language="java" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
-    <title>韩顺平教育-家居网购</title>
+    <title>家居网购</title>
     <base href="<%=request.getContextPath()+"/"%>">
     <!-- 移动端适配 -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
     <link rel="stylesheet" href="assets/css/style.min.css">
+    <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //增加数据类型校验
+            //点击绑定事件
+            $("input[type='submit']").click(function () {
+
+                //1.验证家居名
+                //获取用户输入的家居名
+                var nameVal = $("input[name='name']").val();
+                // 编写正则表达式进行验证
+                // 验证家居名，必须由字母、数字、汉字组成,长度为1-15
+                var namePattern = /^([\w]|[\u4e00-\u9fa5]){1,15}$/;
+                if (!namePattern.test(nameVal)) {
+                    //展示错误提示-属性过滤器
+                    $("span[class='errorMsg']").text("家居名称格式错误，应由字母、数字、汉字组成,长度为1-15");
+                    return false;//不提交，返回false
+                }
+
+                //2.验证商家名
+                //获取用户输入的商家名
+                var makerVal = $("input[name='maker']").val();
+                // 编写正则表达式进行验证
+                // 验证商家名，必须由字母、数字、汉字组成,长度为1-15
+                var makerPattern = /^([\w]|[\u4e00-\u9fa5]){1,15}$/;
+                if (!makerPattern.test(makerVal)) {
+                    //展示错误提示-属性过滤器
+                    $("span[class='errorMsg']").text("商家名称格式错误，应由字母、数字、汉字组成,长度为1-15");
+                    return false;//不提交，返回false
+                }
+
+                //3.验证价格
+                //获取用户输入的价格
+                var priceVal = $("input[name='price']").val();
+                // 编写正则表达式进行验证
+                // 验证价格，非零开头的最多带两位小数的数字
+                var pricePattern = /^([1-9][0-9]*)+(.[0-9]{1,2})?$/;
+                if (!pricePattern.test(priceVal)) {
+                    //展示错误提示-属性过滤器
+                    $("span[class='errorMsg']").text("价格格式错误，应是非零开头的并最多带两位小数的正整数");
+                    return false;//不提交，返回false
+                }
+
+                //4.验证销量
+                //获取用户输入的销量
+                var salesVal = $("input[name='sales']").val();
+                // 编写正则表达式进行验证
+                // 验证价格，零或非零开头的数字
+                var salesPattern = /^(0|[1-9][0-9]*)$/;
+                if (!salesPattern.test(salesVal)) {
+                    //展示错误提示-属性过滤器
+                    $("span[class='errorMsg']").text("销量格式错误，应是零或非零开头的数字");
+                    return false;//不提交，返回false
+                }
+
+                //5.验证库存
+                //获取用户输入的销量
+                var stockVal = $("input[name='stock']").val();
+                // 编写正则表达式进行验证
+                // 验证价格，零或非零开头的数字
+                var stockPattern = /^(0|[1-9][0-9]*)$/;
+                if (!stockPattern.test(stockVal)) {
+                    //展示错误提示-属性过滤器
+                    $("span[class='errorMsg']").text("库存格式错误，应是零或非零开头的数字");
+                    return false;//不提交，返回false
+                }
+
+                //如果以上验证都通过了，就提交表单
+                return true;
+            })
+        })
+    </script>
 </head>
 
 <body>
@@ -32,22 +103,13 @@
                 <!-- Header Action Start -->
                 <div class="col align-self-center">
                     <div class="header-actions">
-                        <div class="header_account_list">
-                            <a href="javascript:void(0)" class="header-action-btn search-btn"><i
-                                    class="icon-magnifier"></i></a>
-                            <div class="dropdown_search">
-                                <form class="action-form" action="#">
-                                    <input class="form-control" placeholder="Enter your search key" type="text">
-                                    <button class="submit" type="submit"><i class="icon-magnifier"></i></button>
-                                </form>
-                            </div>
-                        </div>
+
                         <!-- Single Wedge Start -->
                         <div class="header-bottom-set dropdown">
-                            <a href="#">后台管理</a>
+                            <a href="#">家居管理</a>
                         </div>
                         <div class="header-bottom-set dropdown">
-                            <a href="views/manage/furn_add.jsp">添加家居</a>
+                            <a href="#">订单管理</a>
                         </div>
                     </div>
                 </div>
@@ -63,7 +125,7 @@
                 <!-- Header Logo Start -->
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
-                        <a href="index.html"><img width="280px" src="assets/images/logo/logo.png" alt="Site Logo"/></a>
+                        <a href="index.jsp"><img width="280px" src="assets/images/logo/logo.png" alt="Site Logo"/></a>
                     </div>
                 </div>
                 <!-- Header Logo End -->
@@ -77,10 +139,17 @@
 <!-- Cart Area Start -->
 <div class="cart-main-area pt-100px pb-100px">
     <div class="container">
-        <h3 class="cart-page-title">家居后台管理</h3>
+        <h3 class="cart-page-title">家居后台管理-添加家居</h3>
         <div class="row">
+              <span class="errorMsg"
+                    style="float: right; font-weight: bold; font-size: 15pt; color: red ">
+                  <%--   数据校验错误提示--%>
+                  ${requestScope.errInfo}
+              </span>
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                <form action="#">
+                <form action="manage/furnServlet" method="post">
+                    <%--增加隐藏域，action=add--%>
+                    <input type="hidden" name="action" value="add">
                     <div class="table-content table-responsive cart-table-content">
                         <table>
                             <thead>
@@ -95,23 +164,32 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <%--取出furns集合，循环显示--%>
-                            <c:forEach items="${requestScope.furns}" var="furn">
-                                <tr>
-                                    <td class="product-thumbnail">
-                                        <a href="#"><img class="img-responsive ml-3" src="${furn.imgPath}" alt=""/></a>
-                                    </td>
-                                    <td class="product-name"><a href="#">${furn.name}</a></td>
-                                    <td class="product-name"><a href="#">${furn.maker}</a></td>
-                                    <td class="product-price-cart"><span class="amount">${furn.price}</span></td>
-                                    <td class="product-quantity">${furn.sales}</td>
-                                    <td class="product-quantity">${furn.stock}</td>
-                                    <td class="product-remove">
-                                        <a href="#"><i class="icon-pencil"></i></a>
-                                        <a href="#"><i class="icon-close"></i></a>
-                                    </td>
-                                </tr>
-                            </c:forEach>
+                            <tr>
+                                <td class="product-thumbnail">
+                                    <a href="#"><img class="img-responsive ml-3"
+                                                     src="assets/images/product-image/default.jpg"
+                                                     alt=""/></a>
+                                </td>
+                                <td class="product-name"><input name="name" style="width: 60%" type="text"
+                                                                value=""/></td>
+                                <td class="product-name"><input name="maker" style="width: 90%" type="text"
+                                                                value=""/></td>
+                                <td class="product-price-cart"><input name="price" style="width: 90%" type="text"
+                                                                      value=""/></td>
+                                <td class="product-quantity">
+                                    <input name="sales" style="width: 90%" type="text" value=""/>
+                                </td>
+                                <td class="product-quantity">
+                                    <input name="stock" style="width: 90%" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <!--                                    <a href="#"><i class="icon-pencil"></i></a>-->
+                                    <!--                                    <a href="#"><i class="icon-close"></i></a>-->
+                                    <input type="submit"
+                                           style="width: 90%;background-color: silver;border: silver;border-radius: 20%;"
+                                           value="添加家居"/>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>

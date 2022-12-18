@@ -19,7 +19,7 @@ public class Furn {
      * 这里有一个细节，即实体类的属性名imgPath和对应表中的字段名img_path不一致
      * 解决方法是：在查询时，在对应的字段旁加上 别名
      */
-    private String imgPath; //家居图片路径
+    private String imgPath = "assets/images/product-image/default.jpg"; //家居图片路径
 
     public Furn() {
     }
@@ -32,7 +32,11 @@ public class Furn {
         this.price = price;
         this.sales = sales;
         this.stock = stock;
-        this.imgPath = imgPath;
+        if (!(null == imgPath || "".equals(imgPath))) {
+            //当参数imgPath的值不为空，或者不为空串时，才将其赋给当前对象的imgPath
+            this.imgPath = imgPath;
+        }
+
     }
 
     public Integer getId() {

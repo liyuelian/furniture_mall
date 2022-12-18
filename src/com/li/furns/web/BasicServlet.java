@@ -20,6 +20,9 @@ public abstract class BasicServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //解决接收到的数据中文乱码问题
+        req.setCharacterEncoding("utf-8");
+
         //获取提交表单的隐藏域元素的值
         //如果我们使用模板模式+反射+动态绑定，要满足action的值要和方法名一致
         String action = req.getParameter("action");
