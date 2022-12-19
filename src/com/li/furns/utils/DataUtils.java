@@ -2,7 +2,6 @@ package com.li.furns.utils;
 
 import org.apache.commons.beanutils.BeanUtils;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 /**
@@ -19,5 +18,16 @@ public class DataUtils {
             e.printStackTrace();
         }
         return bean;
+    }
+
+    //将字符串转成数字，否则返回默认值
+    public static int parseInt(String str, int defaultVal) {
+        try {
+            return Integer.parseInt(str);
+        } catch (NumberFormatException e) {
+            System.out.println(str + " 格式不正确");
+        }
+        return defaultVal;
+
     }
 }

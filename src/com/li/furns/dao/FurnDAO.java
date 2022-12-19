@@ -14,8 +14,17 @@ public interface FurnDAO {
 
     /**
      * 将传入的Furn对象，保存到数据库
+     *
      * @param furn Furn对象
      * @return 返回受影响的表行数，失败则返回-1
      */
     public int addFurn(Furn furn);
+
+    /**
+     * 通过传入的id，删除furn表中对应的记录
+     *
+     * @param id id
+     * @return 返回受影响的行数
+     */
+    public int deleteFurnById(int id);
 }

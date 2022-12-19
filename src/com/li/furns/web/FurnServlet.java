@@ -82,4 +82,24 @@ public class FurnServlet extends BasicServlet {
             resp.getWriter().write("添加失败");
         }
     }
+
+    /**
+     * 处理删除家居的请求
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //获取请求删除的家居id
+        String id = req.getParameter("id");
+
+        //防止接收的id不是一个数字型的字符串
+        int delRes = furnService.deleteFurnById(DataUtils.parseInt(id, 0));
+
+        //重定向到家居列表页-该地址由浏览器解析
+        resp.sendRedirect(req.getContextPath() + "/manage/furnServlet?action=list");
+
+    }
 }

@@ -18,9 +18,18 @@ public interface FurnService {
 
     /**
      * 添加Furn对象到数据库
+     *
      * @param furn furn对象
      * @return 返回修改表的行数，失败则返回-1
      */
     public int addFurn(Furn furn);
+
+    /**
+     * 根据id删除对应的家居信息
+     *
+     * @param id id
+     * @return 返回修改表的行数
+     */
+    public int deleteFurnById(int id);
 
 }

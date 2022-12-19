@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class FurnServiceImplTest {
-    private FurnService furnService=new FurnServiceImpl();
+    private FurnService furnService = new FurnServiceImpl();
 
     @Test
     public void queryFurns() {
@@ -20,14 +20,23 @@ public class FurnServiceImplTest {
     }
 
     @Test
-    public void add(){
+    public void add() {
         int add = furnService.addFurn(new Furn(null, "小台灯", "猫家居",
-                                new BigDecimal("99.00"), 55, 24,
-                                "assets/images/product-image/3.jpg"));
+                new BigDecimal("99.00"), 55, 24,
+                "assets/images/product-image/3.jpg"));
         if (add == -1) {
             System.out.println("添加失败");
-        }else {
+        } else {
             System.out.println("添加成功");
+        }
+    }
+
+    @Test
+    public void deleteFurnById() {
+        if (furnService.deleteFurnById(24) != -1) {
+            System.out.println("删除成功");
+        } else {
+            System.out.println("删除失败");
         }
     }
 }

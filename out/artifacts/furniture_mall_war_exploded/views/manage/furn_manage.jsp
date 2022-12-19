@@ -11,6 +11,19 @@
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
     <link rel="stylesheet" href="assets/css/style.min.css">
+    <%--引入jquery--%>
+    <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //获取删除id，绑定事件
+            $("a.deleteFurn").click(function () {
+                //获取要删除的家居的名字
+                var furnName = $(this).parent().parent().find("td:eq(1)").text();
+                //confirm弹出的窗口，点击确定返回true，点击取消返回false
+                return confirm("确认要删除"+furnName+"吗?");
+            })
+        })
+    </script>
 </head>
 
 <body>
@@ -80,7 +93,7 @@
         <h3 class="cart-page-title">家居后台管理</h3>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                <form action="#">
+                <form action="#" method="post">
                     <div class="table-content table-responsive cart-table-content">
                         <table>
                             <thead>
@@ -108,7 +121,10 @@
                                     <td class="product-quantity">${furn.stock}</td>
                                     <td class="product-remove">
                                         <a href="#"><i class="icon-pencil"></i></a>
-                                        <a href="#"><i class="icon-close"></i></a>
+                                            <%--点击删除对应id的家居信息--%>
+                                        <a href="manage/furnServlet?action=delete&id=${furn.id}" class="deleteFurn">
+                                            <i class="icon-close"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             </c:forEach>

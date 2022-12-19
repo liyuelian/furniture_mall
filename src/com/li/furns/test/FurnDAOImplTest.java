@@ -29,4 +29,13 @@ public class FurnDAOImplTest {
             System.out.println("添加数据成功");
         }
     }
+
+    @Test
+    public void deleteFurnById() {
+        if (furnDAO.deleteFurnById(18) != 0) {
+            System.out.println("删除成功");
+        } else {
+            System.out.println("删除失败");
+        }
+    }
 }
