@@ -38,4 +38,18 @@ public class FurnDAOImplTest {
             System.out.println("删除失败");
         }
     }
+
+    @Test
+    public void queryFurnById() {
+        Furn furn = furnDAO.queryFurnById(1);
+        System.out.println(furn);
+    }
+
+    @Test
+    public void updateFurn() {
+        Furn furn = new Furn(39,"king","皇家家居",new BigDecimal(999),
+                88,99,"assets/images/product-image/default.jpg");
+        int i = furnDAO.updateFurn(furn);
+        System.out.println("i=" + i);
+    }
 }

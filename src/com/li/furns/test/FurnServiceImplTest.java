@@ -39,4 +39,17 @@ public class FurnServiceImplTest {
             System.out.println("删除失败");
         }
     }
+
+    @Test
+    public void queryFurnById() {
+        Furn furn = furnService.queryFurnById(1);
+        System.out.println(furn);
+    }
+
+    @Test
+    public void updateFurn() {
+        int i = furnService.updateFurn(new Furn(38, "queen", "皇家家居", new BigDecimal(888),
+                99, 21, "assets/images/product-image/default.jpg"));
+        System.out.println("i=" + i);
+    }
 }

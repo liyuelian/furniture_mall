@@ -120,7 +120,8 @@
                                     <td class="product-quantity">${furn.sales}</td>
                                     <td class="product-quantity">${furn.stock}</td>
                                     <td class="product-remove">
-                                        <a href="#"><i class="icon-pencil"></i></a>
+                                        <%--点击跳转到编辑家居页面，并显示当前要修改的家居信息--%>
+                                        <a href="manage/furnServlet?action=showFurn&id=${furn.id}"><i class="icon-pencil"></i></a>
                                             <%--点击删除对应id的家居信息--%>
                                         <a href="manage/furnServlet?action=delete&id=${furn.id}" class="deleteFurn">
                                             <i class="icon-close"></i>

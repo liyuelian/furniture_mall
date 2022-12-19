@@ -32,4 +32,19 @@ public interface FurnService {
      */
     public int deleteFurnById(int id);
 
+    /**
+     * 根据id返回家居信息
+     *
+     * @param id id
+     * @return 返回furn表中对应的furn对象
+     */
+    public Furn queryFurnById(int id);
+
+    /**
+     * 通过传入的furn对象，修改furn表对应的记录的字段值
+     *
+     * @param furn 传入的furn对象
+     * @return 返回受影响的行数
+     */
+    public int updateFurn(Furn furn);
 }

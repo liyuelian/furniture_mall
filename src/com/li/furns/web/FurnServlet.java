@@ -4,14 +4,11 @@ import com.li.furns.entity.Furn;
 import com.li.furns.service.FurnService;
 import com.li.furns.service.impl.FurnServiceImpl;
 import com.li.furns.utils.DataUtils;
-import org.apache.commons.beanutils.BeanUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.math.BigDecimal;
 import java.util.List;
 
 public class FurnServlet extends BasicServlet {
@@ -96,10 +93,49 @@ public class FurnServlet extends BasicServlet {
         String id = req.getParameter("id");
 
         //防止接收的id不是一个数字型的字符串
-        int delRes = furnService.deleteFurnById(DataUtils.parseInt(id, 0));
+        furnService.deleteFurnById(DataUtils.parseInt(id, 0));
 
         //重定向到家居列表页-该地址由浏览器解析
         resp.sendRedirect(req.getContextPath() + "/manage/furnServlet?action=list");
 
+    }
+
+    /**
+     * 处理显示单个家居信息的请求
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void showFurn(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //获取请求显示的家居id
+        String id = req.getParameter("id");
+        //在数据库中查询，得到furn对象
+        Furn furn = furnService.queryFurnById(DataUtils.parseInt(id, 0));
+        //将furn放入到request域中
+        req.setAttribute("furn", furn);
+        //请求转发到furn_update.jsp中，在该页中显示furn信息
+        //这里使用请求转发是因为如果使用重定向，当刷新页面之后就没有了request域中的信息
+        req.getRequestDispatcher("/views/manage/furn_update.jsp")
+                .forward(req, resp);
+    }
+
+
+    /**
+     * 处理修改家居的请求
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //自动填充Javabean-将提交修改的家居信息封装成Furn对象
+        Furn furn = DataUtils.copyParamToBean(req.getParameterMap(), new Furn());
+        //调用updateFurn，更改数据
+        furnService.updateFurn(furn);
+        //修改成功后重定向，显示列表家居
+        resp.sendRedirect(req.getContextPath() + "/manage/furnServlet?action=list");
     }
 }

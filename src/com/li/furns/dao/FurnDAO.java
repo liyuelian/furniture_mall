@@ -27,4 +27,18 @@ public interface FurnDAO {
      * @return 返回受影响的行数
      */
     public int deleteFurnById(int id);
+
+    /**
+     * 通过传入的id，返回furn表中对应的furn对象
+     * @param id id
+     * @return 返回furn表中对应的furn对象
+     */
+    public Furn queryFurnById(int id);
+
+    /**
+     * 将传入的furn对象，根据id更新到furn表对应的字段
+     * @param furn 传入的furn对象
+     * @return 返回受影响的行数
+     */
+    public int updateFurn(Furn furn);
 }
