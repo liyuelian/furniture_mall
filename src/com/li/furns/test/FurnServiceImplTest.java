@@ -1,11 +1,13 @@
 package com.li.furns.test;
 
 import com.li.furns.entity.Furn;
+import com.li.furns.entity.Page;
 import com.li.furns.service.FurnService;
 import com.li.furns.service.impl.FurnServiceImpl;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FurnServiceImplTest {
@@ -51,5 +53,11 @@ public class FurnServiceImplTest {
         int i = furnService.updateFurn(new Furn(38, "queen", "皇家家居", new BigDecimal(888),
                 99, 21, "assets/images/product-image/default.jpg"));
         System.out.println("i=" + i);
+    }
+
+    @Test
+    public void page() {
+        Page<Furn> page = furnService.page(2, 2);
+        System.out.println(page.getItems());
     }
 }

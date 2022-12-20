@@ -1,6 +1,7 @@
 package com.li.furns.web;
 
 import com.li.furns.entity.Furn;
+import com.li.furns.entity.Page;
 import com.li.furns.service.FurnService;
 import com.li.furns.service.impl.FurnServiceImpl;
 import com.li.furns.utils.DataUtils;
@@ -74,7 +75,9 @@ public class FurnServlet extends BasicServlet {
             //这里如果使用请求转发，当用户刷新页面时，会重新发出一次添加请求，造成数据重复提交
             //因此使用重定向
             //因为重定向实际是让浏览器重新发送请求，所以我们回送完整的url比较保险
-            resp.sendRedirect(req.getContextPath() + "/manage/furnServlet?action=list");
+            //resp.sendRedirect(req.getContextPath() + "/manage/furnServlet?action=list");
+            resp.sendRedirect(req.getContextPath() +
+                    "/manage/furnServlet?action=page&pageNo=" + req.getParameter("pageNo"));
         } else {
             resp.getWriter().write("添加失败");
         }
@@ -94,10 +97,10 @@ public class FurnServlet extends BasicServlet {
 
         //防止接收的id不是一个数字型的字符串
         furnService.deleteFurnById(DataUtils.parseInt(id, 0));
-
         //重定向到家居列表页-该地址由浏览器解析
-        resp.sendRedirect(req.getContextPath() + "/manage/furnServlet?action=list");
-
+        //resp.sendRedirect(req.getContextPath() + "/manage/furnServlet?action=list");
+        resp.sendRedirect(req.getContextPath() +
+                "/manage/furnServlet?action=page&pageNo=" + req.getParameter("pageNo"));
     }
 
     /**
@@ -115,6 +118,9 @@ public class FurnServlet extends BasicServlet {
         Furn furn = furnService.queryFurnById(DataUtils.parseInt(id, 0));
         //将furn放入到request域中
         req.setAttribute("furn", furn);
+
+        //如果请求带来的参数，是请求转发到下一个页面，在下一个页面可以使用param.pageNo获取
+
         //请求转发到furn_update.jsp中，在该页中显示furn信息
         //这里使用请求转发是因为如果使用重定向，当刷新页面之后就没有了request域中的信息
         req.getRequestDispatcher("/views/manage/furn_update.jsp")
@@ -135,7 +141,32 @@ public class FurnServlet extends BasicServlet {
         Furn furn = DataUtils.copyParamToBean(req.getParameterMap(), new Furn());
         //调用updateFurn，更改数据
         furnService.updateFurn(furn);
-        //修改成功后重定向，显示列表家居
-        resp.sendRedirect(req.getContextPath() + "/manage/furnServlet?action=list");
+        ////修改成功后重定向，显示列表家居
+        //resp.sendRedirect(req.getContextPath() + "/manage/furnServlet?action=list");
+
+        //这里我们考虑分页，并带上pageNo
+        resp.sendRedirect(req.getContextPath() +
+                "/manage/furnServlet?action=page&pageNo=" + req.getParameter("pageNo"));
+    }
+
+    /**
+     * 处理分页请求
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void page(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int pageNo = DataUtils.parseInt(req.getParameter("pageNo"), 1);
+        int pageSize = DataUtils.parseInt(req.getParameter("pageSize"), Page.PAGE_SIZE);
+
+        //调用service方法，获取page对象
+        Page<Furn> page = furnService.page(pageNo, pageSize);
+        //将page对象放入request域中
+        req.setAttribute("page", page);
+        //请求转发到furn_manage.jsp
+        req.getRequestDispatcher("/views/manage/furn_manage.jsp")
+                .forward(req, resp);
     }
 }

@@ -20,7 +20,7 @@
                 //获取要删除的家居的名字
                 var furnName = $(this).parent().parent().find("td:eq(1)").text();
                 //confirm弹出的窗口，点击确定返回true，点击取消返回false
-                return confirm("确认要删除"+furnName+"吗?");
+                return confirm("确认要删除" + furnName + "吗?");
             })
         })
     </script>
@@ -60,7 +60,7 @@
                             <a href="#">后台管理</a>
                         </div>
                         <div class="header-bottom-set dropdown">
-                            <a href="views/manage/furn_add.jsp">添加家居</a>
+                            <a href="views/manage/furn_add.jsp?pageNo=${requestScope.page.pageNo}">添加家居</a>
                         </div>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                             </thead>
                             <tbody>
                             <%--取出furns集合，循环显示--%>
-                            <c:forEach items="${requestScope.furns}" var="furn">
+                            <c:forEach items="${requestScope.page.items}" var="furn">
                                 <tr>
                                     <td class="product-thumbnail">
                                         <a href="#"><img class="img-responsive ml-3" src="${furn.imgPath}" alt=""/></a>
@@ -120,10 +120,13 @@
                                     <td class="product-quantity">${furn.sales}</td>
                                     <td class="product-quantity">${furn.stock}</td>
                                     <td class="product-remove">
-                                        <%--点击跳转到编辑家居页面，并显示当前要修改的家居信息--%>
-                                        <a href="manage/furnServlet?action=showFurn&id=${furn.id}"><i class="icon-pencil"></i></a>
+                                            <%--点击跳转到编辑家居页面，并显示当前要修改的家居信息--%>
+                                        <a href="manage/furnServlet?action=showFurn&id=${furn.id}&pageNo=${requestScope.page.pageNo}">
+                                            <i class="icon-pencil"></i>
+                                        </a>
                                             <%--点击删除对应id的家居信息--%>
-                                        <a href="manage/furnServlet?action=delete&id=${furn.id}" class="deleteFurn">
+                                        <a href="manage/furnServlet?action=delete&id=${furn.id}&pageNo=${requestScope.page.pageNo}"
+                                           class="deleteFurn">
                                             <i class="icon-close"></i>
                                         </a>
                                     </td>
@@ -135,6 +138,38 @@
                 </form>
             </div>
         </div>
+        <!--  Pagination Area Start 分页导航条 -->
+        <div class="pro-pagination-style text-center mb-md-30px mb-lm-30px mt-6" data-aos="fade-up">
+            <ul>
+                <%--如果当前页大于1,就显示上一页--%>
+                <c:if test="${requestScope.page.pageNo>1}">
+                    <li><a href="manage/furnServlet?action=page&pageNo=${requestScope.page.pageNo-1}">上页</a></li>
+                </c:if>
+                <%--   显示所有的分页数
+                      先确定开始页数 begin 第一页
+                      再确定结束页数 end 第page.TotalCount页
+                --%>
+                <c:set var="begin" value="1"/>
+                <c:set var="end" value="${requestScope.page.pageTotalCount}"/>
+                <c:forEach begin="${begin}" end="${end}" var="i">
+                    <%--如果i为当前页，就使用class=active来修饰--%>
+                    <c:if test="${i==requestScope.page.pageNo}">
+                        <li><a class="active" href="manage/furnServlet?action=page&pageNo=${i}">${i}</a></li>
+                    </c:if>
+                    <c:if test="${i!=requestScope.page.pageNo}">
+                        <li><a href="manage/furnServlet?action=page&pageNo=${i}">${i}</a></li>
+                    </c:if>
+                </c:forEach>
+                <%--  --%>
+                <%--    如果当前页小于总页数，就往下一页--%>
+                <c:if test="${requestScope.page.pageNo < requestScope.page.pageTotalCount}">
+                    <li><a href="manage/furnServlet?action=page&pageNo=${requestScope.page.pageNo+1}">下页</a></li>
+                </c:if>
+                <li><a>共${requestScope.page.pageTotalCount}页</a></li>
+                <li><a>共${requestScope.page.totalRow}记录</a></li>
+            </ul>
+        </div>
+        <!--  Pagination Area end -->
     </div>
 </div>
 <!-- Cart Area End -->

@@ -75,6 +75,8 @@
                     <input type="hidden" name="id" value="${requestScope.furn.id}">
                     <%--将action的值传递出去--%>
                     <input type="hidden" name="action" value="update">
+                    <%--将pageNo的值传递出去--%>
+                    <input type="hidden" name="pageNo" value="${param.pageNo}">
                     <div class="table-content table-responsive cart-table-content">
                         <table>
                             <thead>

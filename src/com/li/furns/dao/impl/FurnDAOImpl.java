@@ -3,7 +3,9 @@ package com.li.furns.dao.impl;
 import com.li.furns.dao.BasicDAO;
 import com.li.furns.dao.FurnDAO;
 import com.li.furns.entity.Furn;
+import com.li.furns.entity.Page;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -60,5 +62,21 @@ public class FurnDAOImpl extends BasicDAO<Furn> implements FurnDAO {
                 "WHERE `id`=?";
         return update(sql, furn.getName(), furn.getMaker(), furn.getPrice(),
                 furn.getSales(), furn.getStock(), furn.getImgPath(), furn.getId());
+    }
+
+    @Override
+    public int getTotalRow() {
+        String sql = "SELECT COUNT(*) FROM `furn`";
+        //return (Integer) queryScalar(sql);==>会有隐患，可能出现ClassCastException异常
+        return ((Number) queryScalar(sql)).intValue();
+    }
+
+    @Override
+    public List<Furn> getPageItems(int begin, int pageSize) {
+        String sql = "SELECT `id` , `name` , `maker` , `price` , `sales` ," +
+                " `stock` , `img_path` AS imgPath " +
+                "FROM `furn` " +
+                "LIMIT ?,?";
+        return queryMulti(sql, Furn.class, begin, pageSize);
     }
 }

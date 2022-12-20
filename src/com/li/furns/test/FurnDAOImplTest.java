@@ -47,9 +47,23 @@ public class FurnDAOImplTest {
 
     @Test
     public void updateFurn() {
-        Furn furn = new Furn(39,"king","皇家家居",new BigDecimal(999),
-                88,99,"assets/images/product-image/default.jpg");
+        Furn furn = new Furn(39, "king", "皇家家居", new BigDecimal(999),
+                88, 99, "assets/images/product-image/default.jpg");
         int i = furnDAO.updateFurn(furn);
         System.out.println("i=" + i);
+    }
+
+    @Test
+    public void getTotalRow() {
+        int totalRow = furnDAO.getTotalRow();
+        System.out.println(totalRow);
+    }
+
+    @Test
+    public void getPageItems() {
+        List<Furn> pageItems = furnDAO.getPageItems(1, 3);
+        for (Furn pageItem : pageItems) {
+            System.out.println(pageItem);
+        }
     }
 }

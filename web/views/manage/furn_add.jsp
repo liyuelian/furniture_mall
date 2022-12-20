@@ -150,6 +150,8 @@
                 <form action="manage/furnServlet" method="post">
                     <%--增加隐藏域，action=add--%>
                     <input type="hidden" name="action" value="add">
+                    <%--增加隐藏域，pageNo--%>
+                    <input type="hidden" name="pageNo" value="${param.pageNo}">
                     <div class="table-content table-responsive cart-table-content">
                         <table>
                             <thead>

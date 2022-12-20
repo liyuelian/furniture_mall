@@ -1,6 +1,7 @@
 package com.li.furns.service;
 
 import com.li.furns.entity.Furn;
+import com.li.furns.entity.Page;
 
 import java.util.List;
 
@@ -47,4 +48,13 @@ public interface FurnService {
      * @return 返回受影响的行数
      */
     public int updateFurn(Furn furn);
+
+    /**
+     * 根据传入的pageNo和pageSize，返回对应的page对象
+     *
+     * @param pageNo   表示第几页
+     * @param pageSize 表示一页取出多少条记录
+     * @return 返回对应的page对象
+     */
+    public Page<Furn> page(int pageNo, int pageSize);
 }
