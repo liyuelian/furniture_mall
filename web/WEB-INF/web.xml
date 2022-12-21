@@ -48,4 +48,13 @@
         <!--url-pattern这样写是为了过滤器可以更好限制访问权限-->
         <url-pattern>/manage/furnServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CustomerFurnServlet</servlet-name>
+        <servlet-class>com.li.furns.web.CustomerFurnServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CustomerFurnServlet</servlet-name>
+        <url-pattern>/customerFurnServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
