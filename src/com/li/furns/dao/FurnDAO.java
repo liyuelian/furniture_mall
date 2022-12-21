@@ -63,4 +63,20 @@ public interface FurnDAO {
      * @return 返回对应对象的集合
      */
     public List<Furn> getPageItems(int begin, int pageSize);
+
+    /**
+     * 根据furnName返回符合条件的记录数
+     *
+     * @param furnName 搜索条件
+     * @return 返回符合条件的记录数
+     */
+    public int getTotalRowByName(String furnName);
+
+    /**
+     * 根据 begin,pageSize,furnName，返回furn的记录
+     *
+     * @param furnName 搜索条件
+     * @return 返回furn对象集合
+     */
+    public List<Furn> getPageItemByName(int begin, int pageSize, String furnName);
 }

@@ -60,4 +60,12 @@ public class FurnServiceImplTest {
         Page<Furn> page = furnService.page(2, 2);
         System.out.println(page.getItems());
     }
+
+    @Test
+    public void pageByName() {
+        Page<Furn> page = furnService.pageByName(1, 5, "桌子");
+        for (Furn furn : page.getItems()) {
+            System.out.println(furn);
+        }
+    }
 }

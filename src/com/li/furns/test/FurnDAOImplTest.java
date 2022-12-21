@@ -66,4 +66,18 @@ public class FurnDAOImplTest {
             System.out.println(pageItem);
         }
     }
+
+    @Test
+    public void getPageTotalCountByName() {
+        System.out.println("根据名字’沙发‘搜索=>" + furnDAO.getTotalRowByName("沙发"));
+    }
+
+    @Test
+    public void getPageItemByName() {
+        //从第0条记录开始，每页显示5个记录
+        List<Furn> furns = furnDAO.getPageItemByName(0, 5, "沙发");
+        for (Furn furn : furns) {
+            System.out.println(furn);
+        }
+    }
 }

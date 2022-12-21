@@ -233,7 +233,10 @@
                 <div class="row flex-sm-row-reverse">
                     <div class="col-md-6 text-right">
                         <div class="payment-link">
-                            <img src="#" alt="">
+                            <%--img src="#" 会去请求当前页url，当前页参考的是base，因此这里会去请求首页--%>
+                            <%--<base href="<%=request.getContextPath()+"/"%>">--%>
+
+                            <%--<img src="#" alt="">--%>
                         </div>
                     </div>
                     <div class="col-md-6 text-left">

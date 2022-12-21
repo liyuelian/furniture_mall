@@ -3,9 +3,7 @@ package com.li.furns.dao.impl;
 import com.li.furns.dao.BasicDAO;
 import com.li.furns.dao.FurnDAO;
 import com.li.furns.entity.Furn;
-import com.li.furns.entity.Page;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -78,5 +76,21 @@ public class FurnDAOImpl extends BasicDAO<Furn> implements FurnDAO {
                 "FROM `furn` " +
                 "LIMIT ?,?";
         return queryMulti(sql, Furn.class, begin, pageSize);
+    }
+
+    @Override
+    public int getTotalRowByName(String furnName) {
+        String sql = "SELECT  COUNT(*) " +
+                "FROM `furn` " +
+                "WHERE `name` LIKE ?";
+        return ((Number) queryScalar(sql, "%" + furnName + "%")).intValue();
+    }
+
+    @Override
+    public List<Furn> getPageItemByName(int begin, int pageSize, String furnName) {
+        String sql = "SELECT  `id` , `name` , `maker` , `price` , `sales` , `stock` , `img_path` AS imgPath " +
+                "FROM `furn` " +
+                "WHERE `name` LIKE ? LIMIT ?,?";
+        return queryMulti(sql, Furn.class, "%" + furnName + "%", begin, pageSize);
     }
 }

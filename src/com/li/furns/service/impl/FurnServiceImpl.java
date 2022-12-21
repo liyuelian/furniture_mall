@@ -66,4 +66,32 @@ public class FurnServiceImpl implements FurnService {
 
         return page;
     }
+
+    @Override
+    public Page<Furn> pageByName(int pageNo, int pageSize, String furnName) {
+        //先创建一个page对象，然后根据实际情况填充属性
+        Page<Furn> page = new Page<>();
+        //1.当前第几页
+        page.setPageNo(pageNo);
+        //2.每页取出多少条记录
+        page.setPageSize(pageSize);
+        //3.根据名字来返回总记录数
+        int totalRow = furnDAO.getTotalRowByName(furnName);
+        page.setTotalRow(totalRow);
+        //4.总页数 = 总记录数 / 每页记录数
+        int pageTotalCount = totalRow / pageSize;
+        if (totalRow % pageSize > 0) {
+            //如果有余数就把总页数 +1
+            pageTotalCount++;
+        }
+        page.setPageTotalCount(pageTotalCount);
+        //5.数据集合items
+        //SELECT * FROM table_name
+        //LIMIT 每页显示记录数*（第几页-1）,每页显示记录数
+        int begin = (pageNo - 1) * pageSize;
+        List<Furn> pageItems = furnDAO.getPageItemByName(begin, pageSize, furnName);
+        page.setItems(pageItems);
+        //6.还差一个url，分页导航，先放一放
+        return page;
+    }
 }

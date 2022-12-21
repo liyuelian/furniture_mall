@@ -41,6 +41,7 @@ public abstract class BasicServlet extends HttpServlet {
              */
             Method declaredMethod =
                     this.getClass().getDeclaredMethod(action, HttpServletRequest.class, HttpServletResponse.class);
+            System.out.println("declaredMethod=>" + declaredMethod);
             //使用方法对象进行反射调用
             //public Object invoke(Object obj, Object... args){}
             declaredMethod.invoke(this, req, resp);

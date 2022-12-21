@@ -34,4 +34,40 @@ public class CustomerFurnServlet extends BasicServlet {
         req.getRequestDispatcher("/views/customer/index.jsp")
                 .forward(req, resp);
     }
+
+
+    /**
+     * 处理首页搜索请求
+     * 并进行分页（只对搜索到的信息分页）
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void pageByName(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //获取请求参数
+        int pageNo = DataUtils.parseInt(req.getParameter("pageNo"), 1);
+        int pageSize = DataUtils.parseInt(req.getParameter("pageSize"), Page.PAGE_SIZE);
+        //如果参数有name但没有值，接收的就是空串
+        //如果参数没有name，接收到的就是null
+        String furnName = req.getParameter("furnName");
+        //这样做，将""和null的业务逻辑合并在一起
+        if (furnName == null) {
+            furnName = "";
+        }
+        //调用service方法，获取Page对象
+        Page<Furn> page = furnService.pageByName(pageNo, pageSize, furnName);
+        //根据furnName
+        StringBuilder url = new StringBuilder("customerFurnServlet?action=pageByName");
+        if (!"".equals(furnName)) {//如果furnName不为空串，就拼接 furnName参数
+            url.append("&furnName=").append(furnName);
+        }
+        page.setUrl(url.toString());
+        //将page放入request中
+        req.setAttribute("page", page);
+        //请求转发到/customer/index.jsp
+        req.getRequestDispatcher("/views/customer/index.jsp")
+                .forward(req, resp);
+    }
 }

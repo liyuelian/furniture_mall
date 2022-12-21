@@ -10,7 +10,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--注意这里如果没有子元素的话不要分行！！！--%>
-<jsp:forward page="/customerFurnServlet?action=page&pageNo=1"></jsp:forward>
+<jsp:forward page="/customerFurnServlet?action=pageByName&pageNo=1"></jsp:forward>
 
 
 

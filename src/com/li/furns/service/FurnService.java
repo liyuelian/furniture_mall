@@ -57,4 +57,14 @@ public interface FurnService {
      * @return 返回对应的page对象
      */
     public Page<Furn> page(int pageNo, int pageSize);
+
+    /**
+     * 根据传入的pageNo，pageSize和furnName，返回对应的page对象
+     *
+     * @param pageNo 表示第几页
+     * @param pageSize 表示一页取出多少条记录
+     * @param furnName 搜索的家居名
+     * @return 返回对应的page对象
+     */
+    public Page<Furn> pageByName(int pageNo, int pageSize, String furnName);
 }
