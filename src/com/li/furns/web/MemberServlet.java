@@ -88,4 +88,20 @@ public class MemberServlet extends BasicServlet {
                     .forward(request, response);
         }
     }
+
+    /**
+     * 处理用户注销登录的请求
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //销毁当前用户的session
+        req.getSession().invalidate();
+        //重定向到index.jsp，目的是刷新首页
+        //req.getContextPath()=>/项目名  -默认访问index.jsp
+        resp.sendRedirect(req.getContextPath());
+    }
 }
