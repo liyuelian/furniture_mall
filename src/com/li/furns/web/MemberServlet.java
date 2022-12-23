@@ -42,9 +42,14 @@ public class MemberServlet extends BasicServlet {
             //注意路径
             request.getRequestDispatcher("/views/member/login.jsp")
                     .forward(request, response);
-        } else {
-            //否则，跳转到登录成功页面
-            request.getRequestDispatcher("/views/member/login_ok.html")
+        } else {//登录成功
+            //创建session，将jsessionid作为cookie返回给浏览器
+            HttpSession session = request.getSession();
+            session.setMaxInactiveInterval(1800);//设置生命周期为30分钟
+            //将得到的member对象放入session域对象中
+            session.setAttribute("member", member);
+            //跳转到登录成功页面
+            request.getRequestDispatcher("/views/member/login_ok.jsp")
                     .forward(request, response);
         }
     }

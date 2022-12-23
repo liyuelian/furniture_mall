@@ -38,18 +38,31 @@
                             <div class="dropdown_search">
                                 <form class="action-form" action="customerFurnServlet">
                                     <input type="hidden" name="action" value="pageByName">
-                                    <input class="form-control" name="furnName" placeholder="输入家居名搜索" type="text" >
+                                    <input class="form-control" name="furnName" placeholder="输入家居名搜索" type="text">
                                     <button class="submit" type="submit"><i class="icon-magnifier"></i></button>
                                 </form>
                             </div>
                         </div>
                         <!-- Single Wedge Start -->
-                        <div class="header-bottom-set dropdown">
-                            <a href="views/member/login.jsp">登录|注册</a>
-                        </div>
-                        <div class="header-bottom-set dropdown">
-                            <a href="#">后台管理</a>
-                        </div>
+                        <%--根据用户登录的状态显示不同菜单--%>
+                        <%--如果未登录--%>
+                        <c:if test="${empty sessionScope.member}">
+                            <div class="header-bottom-set dropdown">
+                                <a href="views/member/login.jsp">登录|注册</a>
+                            </div>
+                        </c:if>
+                        <%--如果已登录--%>
+                        <c:if test="${not empty sessionScope.member}">
+                            <div class="header-bottom-set dropdown">
+                                <a> 欢迎：${sessionScope.member.username}</a>
+                            </div>
+                            <div class="header-bottom-set dropdown">
+                                <a href="#">订单管理</a>
+                            </div>
+                            <div class="header-bottom-set dropdown">
+                                <a href="#">安全退出</a>
+                            </div>
+                        </c:if>
                         <!-- Single Wedge End -->
                         <a href="#offcanvas-cart"
                            class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">

@@ -1,9 +1,11 @@
-<!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
     <title>家居网购</title>
+    <base href="<%=request.getContextPath()+"/"%>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
@@ -22,10 +24,47 @@
                 <!-- Header Logo Start -->
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
-                        <a href="index.html"><img src="assets/images/logo/logo.png" alt="Site Logo"/></a>
+                        <a href="index.jsp"><img src="assets/images/logo/logo.png" alt="Site Logo"/></a>
                     </div>
                 </div>
                 <!-- Header Logo End -->
+                <!-- Header Action Start -->
+                <div class="col align-self-center">
+                    <div class="header-actions">
+                        <div class="header_account_list">
+                            <a href="javascript:void(0)" class="header-action-btn search-btn"><i
+                                    class="icon-magnifier"></i></a>
+                            <div class="dropdown_search">
+                                <form class="action-form" action="customerFurnServlet">
+                                    <input type="hidden" name="action" value="pageByName">
+                                    <input class="form-control" name="furnName" placeholder="输入家居名搜索" type="text" >
+                                    <button class="submit" type="submit"><i class="icon-magnifier"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- Single Wedge Start -->
+                        <div class="header-bottom-set dropdown">
+                            欢迎：${sessionScope.member.username}
+                        </div>
+                        <div class="header-bottom-set dropdown">
+                            <a href="#">订单管理</a>
+                        </div>
+                        <div class="header-bottom-set dropdown">
+                            <a href="#">安全退出</a>
+                        </div>
+                        <!-- Single Wedge End -->
+                        <a href="#offcanvas-cart"
+                           class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
+                            <i class="icon-handbag"> 购物车</i>
+                            <span class="header-action-num">88</span>
+                        </a>
+                        <a href="#offcanvas-mobile-menu"
+                           class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
+                            <i class="icon-menu"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- Header Action End -->
             </div>
         </div>
     </div>
@@ -36,8 +75,8 @@
                 <!-- Header Logo Start -->
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
-                        <a href="index.html"><img width="280px" src="assets/images/logo/logo.png"
-                                                  alt="Site Logo"/></a>
+                        <a href="index.jsp"><img width="280px" src="assets/images/logo/logo.png"
+                                                                alt="Site Logo"/></a>
                     </div>
                 </div>
                 <!-- Header Logo End -->
@@ -56,7 +95,9 @@
             <div class="col-lg-7 col-md-12 ml-auto mr-auto">
                 <div class="login-register-wrapper">
                     <div class="login-register-tab-list nav">
-                        <a class="active"  href="index.html">
+                        <a class="active" href="index.jsp">
+                            <%--这里需要走web/index.jsp
+                            而不是web/views/customer/index.jsp--%>
                             <h4>登录成功, 返回首页</h4>
                         </a>
                     </div>

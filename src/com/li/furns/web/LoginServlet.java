@@ -36,7 +36,7 @@
 //                    .forward(request, response);
 //        } else {
 //            //否则，跳转到登录成功页面
-//            request.getRequestDispatcher("/views/member/login_ok.html")
+//            request.getRequestDispatcher("/views/member/login_ok.jsp")
 //                    .forward(request, response);
 //        }
 //    }
