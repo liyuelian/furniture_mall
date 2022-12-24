@@ -20,6 +20,13 @@
             //ctrl+home 定位到页面最上方
             //ctrl+end 定位到页面最下方
 
+            //模拟一个点击事件，选中注册
+            //决定是显示登录还是注册tab
+            //如果注册失败，显示注册tab，而不是默认的登录tab
+            if ("${requestScope.active}" == "register") {
+                $("#register_tab")[0].click();//模拟点击，让页面跳转到注册表单
+            }//如果不是，会默认跳转到登录tab
+
             //点击绑定事件
             $("#sub-btn").click(function () {
 
@@ -64,12 +71,28 @@
                     return false;//不提交，返回false
                 }
 
+                //5.验证码不能为空
+                var codeText = $("#code").val();
+                //去掉验证码前后空格
+                var codeText = $.trim(codeText);
+                if (codeText == null || codeText == "") {
+                    //提示
+                    $("span.errorMsg").text("验证码不能为空");
+                    return false;
+                }
+
                 //如果上面的信息格式都正确，就可以提交表单信息了
                 //因为还没有写后台代码，这里暂时使用提示信息表示
                 $("span.errorMsg").text("验证通过...");
-
                 //目前我们写了后台，当用户验证通过时，返回true
                 return true;
+            })
+
+            //给验证码图片绑定单击事件,可以获取新的验证码
+            $("#codeImg").click(function () {
+                //在url没有变化的时候，图片不会发出新的请求（因为图片已经被缓存了）
+                //为了防止不刷新，可以携带一个变化的参数
+                this.src = "<%=request.getContextPath()%>/kaptchaServlet?d=" + new Date();
             })
         })
     </script>
@@ -125,7 +148,7 @@
                         <a class="active" data-bs-toggle="tab" href="#lg1">
                             <h4>会员登录</h4>
                         </a>
-                        <a data-bs-toggle="tab" href="#lg2">
+                        <a id="register_tab" data-bs-toggle="tab" href="#lg2">
                             <h4>会员注册</h4>
                         </a>
                     </div>
@@ -141,7 +164,8 @@
                                     <form action="memberServlet" method="post">
                                         <%--增加隐藏域，表示login请求--%>
                                         <input type="hidden" name="action" value="login"/>
-                                        <input type="text" name="username" placeholder="Username" value="${requestScope.username}"/>
+                                        <input type="text" name="username" placeholder="Username"
+                                               value="${requestScope.username}"/>
                                         <input type="password" name="password" placeholder="Password"/>
                                         <div class="button-box">
                                             <div class="login-toggle-btn">
@@ -159,17 +183,21 @@
                             <div class="login-form-container">
                                 <div class="login-register-form">
                                     <span class="errorMsg"
-                                          style="float: right; font-weight: bold; font-size: 20pt; margin-left: 10px;"></span>
+                                          style="float: right; font-weight: bold; font-size: 20pt; margin-left: 10px;">
+                                        ${requestScope.errInfo}
+                                    </span>
                                     <!--注册表单-->
                                     <form action="memberServlet" method="post">
                                         <%--增加隐藏域，表示register请求--%>
                                         <input type="hidden" name="action" value="register"/>
-                                        <input type="text" id="username" name="username" placeholder="Username"/>
+                                        <input type="text" id="username" name="username"
+                                               value="${requestScope.username}" placeholder="Username"/>
                                         <input type="password" id="password" name="password" placeholder="输入密码"/>
                                         <input type="password" id="repwd" name="repassword" placeholder="确认密码"/>
-                                        <input name="email" id="email" placeholder="电子邮件" type="email"/>
-                                        <input type="text" id="code" name="user-name" style="width: 50%" id="code"
-                                               placeholder="验证码"/>　　<img alt="" src="../../assets/images/code/code.bmp">
+                                        <input name="email" id="email" placeholder="电子邮件" value="${requestScope.email}"
+                                               type="email"/>
+                                        <input type="text" name="code" style="width: 50%" id="code" placeholder="验证码"/>
+                                        <img id="codeImg" alt="" src="kaptchaServlet" style="width: 120px;height: 50px">
                                         <div class="button-box">
                                             <button type="submit" id="sub-btn"><span>会员注册</span></button>
                                         </div>

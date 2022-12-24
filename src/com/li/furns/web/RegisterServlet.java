@@ -31,11 +31,11 @@
 //            Member member = new Member(null, username, password, email);
 //            if (memberService.registerMember(member)) {
 //                //如果注册成功，请求转发到register_ok.html
-//                request.getRequestDispatcher("/views/member/register_ok.html")
+//                request.getRequestDispatcher("/views/member/register_ok.jsp")
 //                        .forward(request, response);
 //            } else {
 //                //注册失败，请求转发到register_fail.html
-//                request.getRequestDispatcher("/views/member/register_fail.html")
+//                request.getRequestDispatcher("/views/member/register_fail.jsp")
 //                        .forward(request, response);
 //            }
 //        } else {//否则不能进行注册
