@@ -11,6 +11,19 @@
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
     <link rel="stylesheet" href="assets/css/style.min.css">
+    <%--引入jquery--%>
+    <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //给add to cart绑定事件
+            $("button.add-to-cart").click(function () {
+                //获取到点击的furn-id
+                var furnId = $(this).attr("furnId");
+                //发出一个请求-添加家居=>后面改成ajax
+                location.href = "cartServlet?action=addItem&id=" + furnId;
+            })
+        })
+    </script>
 </head>
 
 <body>
@@ -67,7 +80,10 @@
                         <a href="#offcanvas-cart"
                            class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
                             <i class="icon-handbag"> 购物车</i>
-                            <span class="header-action-num">88</span>
+                            <span class="header-action-num">
+                                <%--本质就是调用cart对象getTotalCount--%>
+                                ${sessionScope.cart.totalCount}
+                            </span>
                         </a>
                         <a href="#offcanvas-mobile-menu"
                            class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
@@ -137,8 +153,8 @@
                                                    data-bs-target="#exampleModal"><i
                                                         class="icon-size-fullscreen"></i></a>
                                             </div>
-                                            <button title="Add To Cart" class=" add-to-cart">Add
-                                                To Cart
+                                            <button title="Add To Cart" class="add-to-cart" furnId="${furn.id}">
+                                                Add To Cart
                                             </button>
                                         </div>
                                         <div class="content">
