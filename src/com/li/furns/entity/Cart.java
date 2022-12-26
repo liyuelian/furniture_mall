@@ -1,5 +1,6 @@
 package com.li.furns.entity;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -13,6 +14,22 @@ public class Cart {
     //定义属性
     //包含多个CartItem对象，使用HashMap来保存
     private HashMap<Integer, CartItem> items = new HashMap<>();
+
+    public HashMap<Integer, CartItem> getItems() {
+        return items;
+    }
+
+    public BigDecimal getCartTotalPrice() {
+        BigDecimal cartTotalPrice = new BigDecimal(0);
+        //遍历购物车，返回整个购物车的商品总价格
+        Set<Integer> keys = items.keySet();
+        for (Integer id : keys) {
+            CartItem item = items.get(id);
+            //一定要把add后的值重新赋给cartTotalPrice
+            cartTotalPrice = cartTotalPrice.add(item.getTotalPrice());
+        }
+        return cartTotalPrice;
+    }
 
     public int getTotalCount() {
         //因为前端每点击一次添加商品，购物车显示就会调用getTotalCount方法，
