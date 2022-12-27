@@ -16,6 +16,15 @@ public class Cart {
     private HashMap<Integer, CartItem> items = new HashMap<>();
 
     /**
+     * 根据家居id删除对应的cartItem
+     *
+     * @param id 家居id
+     */
+    public void delItem(int id) {
+        items.remove(id);
+    }
+
+    /**
      * 根据家居id和count，修改指定cartItem的数量和总价
      *
      * @param id    家居id

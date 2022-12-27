@@ -22,6 +22,25 @@ public class CartServlet extends BasicServlet {
     private FurnService furnService = new FurnServiceImpl();
 
     /**
+     * 根据id删除购物车的某个家居信息
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void delItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int id = DataUtils.parseInt(req.getParameter("id"), 0);
+        //获取session中的购物车
+        Cart cart = (Cart) req.getSession().getAttribute("cart");
+        if (null != cart) {
+            cart.delItem(id);
+        }
+        //回到请求删除家居项的购物车页面
+        resp.sendRedirect(req.getHeader("Referer"));
+    }
+
+    /**
      * 更新购物车的某个家居数量
      *
      * @param req
@@ -37,7 +56,7 @@ public class CartServlet extends BasicServlet {
         if (null != cart) {
             cart.updateCount(id, count);
         }
-        //回到请求更新家居购物车的页面
+        //回到请求更新家居的购物车面
         resp.sendRedirect(req.getHeader("Referer"));
     }
 

@@ -12,34 +12,43 @@
     <link rel="stylesheet" href="assets/css/style.min.css"/>
     <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
-    $(function () {
-        /*--------------------------
-            Cart Plus Minus Button
-        ----------------------------*/
-        var CartPlusMinus = $(".cart-plus-minus");
-        CartPlusMinus.prepend('<div class="dec qtybutton">-</div>');
-        CartPlusMinus.append('<div class="inc qtybutton">+</div>');
-        $(".qtybutton").on("click", function () {
-            var $button = $(this);
-            var oldValue = $button.parent().find("input").val();
-            if ($button.text() === "+") {
-                var newVal = parseFloat(oldValue) + 1;
-            } else {
-                // Don't allow decrementing below zero
-                if (oldValue > 1) {
-                    var newVal = parseFloat(oldValue) - 1;
+        $(function () {
+            //给删除购物车绑定事件
+            $("a.delItem").click(function () {
+                //获取要删除的家居名
+                var furnName = $(this).parent().parent().find("td:eq(1)").text();
+                //使用确认弹窗
+                //点击确认，返回true，点击取消，返回false
+                return window.confirm("你确认要删除" + furnName + "吗?")
+            })
+
+            /*--------------------------
+                Cart Plus Minus Button
+            ----------------------------*/
+            var CartPlusMinus = $(".cart-plus-minus");
+            CartPlusMinus.prepend('<div class="dec qtybutton">-</div>');
+            CartPlusMinus.append('<div class="inc qtybutton">+</div>');
+            $(".qtybutton").on("click", function () {
+                var $button = $(this);
+                var oldValue = $button.parent().find("input").val();
+                if ($button.text() === "+") {
+                    var newVal = parseFloat(oldValue) + 1;
                 } else {
-                    newVal = 1;
+                    // Don't allow decrementing below zero
+                    if (oldValue > 1) {
+                        var newVal = parseFloat(oldValue) - 1;
+                    } else {
+                        newVal = 1;
+                    }
                 }
-            }
-            $button.parent().find("input").val(newVal);
-            var furnId = $button.parent().find("input").attr("furnId");
-            //发出修改购物车的请求
-            location.href =
-                "cartServlet?action=updateCount&count=" + newVal + "&id=" + furnId;
-        });
-    })
-</script>
+                $button.parent().find("input").val(newVal);
+                var furnId = $button.parent().find("input").attr("furnId");
+                //发出修改购物车的请求
+                location.href =
+                    "cartServlet?action=updateCount&count=" + newVal + "&id=" + furnId;
+            });
+        })
+    </script>
 </head>
 
 <body>
@@ -158,7 +167,9 @@
                                         </td>
                                         <td class="product-subtotal">${entry.value.totalPrice}</td>
                                         <td class="product-remove">
-                                            <a href="#"><i class="icon-close"></i></a>
+                                            <a class="delItem" href="cartServlet?action=delItem&id=${entry.value.id}">
+                                                <i class="icon-close"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 </c:forEach>
