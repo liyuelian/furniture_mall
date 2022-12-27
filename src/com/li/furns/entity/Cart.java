@@ -15,6 +15,23 @@ public class Cart {
     //包含多个CartItem对象，使用HashMap来保存
     private HashMap<Integer, CartItem> items = new HashMap<>();
 
+    /**
+     * 根据家居id和count，修改指定cartItem的数量和总价
+     *
+     * @param id    家居id
+     * @param count 指定id的家居的数量
+     */
+    public void updateCount(int id, int count) {
+        //获取指定的cartItem
+        CartItem item = items.get(id);
+        if (null != item) {//如果cartItem不为空
+            //更新数量
+            item.setCount(count);
+            //某家居总价 = 单价 * 数量（为了安全使用get方法获取数量count）
+            item.setTotalPrice(item.getPrice().multiply(new BigDecimal(item.getCount())));
+        }
+    }
+
     public HashMap<Integer, CartItem> getItems() {
         return items;
     }

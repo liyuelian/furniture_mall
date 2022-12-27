@@ -10,6 +10,36 @@
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
     <link rel="stylesheet" href="assets/css/style.min.css"/>
+    <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+    $(function () {
+        /*--------------------------
+            Cart Plus Minus Button
+        ----------------------------*/
+        var CartPlusMinus = $(".cart-plus-minus");
+        CartPlusMinus.prepend('<div class="dec qtybutton">-</div>');
+        CartPlusMinus.append('<div class="inc qtybutton">+</div>');
+        $(".qtybutton").on("click", function () {
+            var $button = $(this);
+            var oldValue = $button.parent().find("input").val();
+            if ($button.text() === "+") {
+                var newVal = parseFloat(oldValue) + 1;
+            } else {
+                // Don't allow decrementing below zero
+                if (oldValue > 1) {
+                    var newVal = parseFloat(oldValue) - 1;
+                } else {
+                    newVal = 1;
+                }
+            }
+            $button.parent().find("input").val(newVal);
+            var furnId = $button.parent().find("input").attr("furnId");
+            //发出修改购物车的请求
+            location.href =
+                "cartServlet?action=updateCount&count=" + newVal + "&id=" + furnId;
+        });
+    })
+</script>
 </head>
 
 <body>
@@ -54,7 +84,7 @@
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
                         <a href="index.jsp"><img width="280px" src="assets/images/logo/logo.png"
-                                                             alt="Site Logo"/></a>
+                                                 alt="Site Logo"/></a>
                     </div>
                 </div>
                 <!-- Header Logo End -->
@@ -117,10 +147,12 @@
                                                              alt=""/></a>
                                         </td>
                                         <td class="product-name"><a href="#">${entry.value.name}</a></td>
-                                        <td class="product-price-cart"><span class="amount">${entry.value.price}</span></td>
+                                        <td class="product-price-cart"><span class="amount">${entry.value.price}</span>
+                                        </td>
                                         <td class="product-quantity">
                                             <div class="cart-plus-minus">
-                                                <input class="cart-plus-minus-box" type="text" name="qtybutton"
+                                                <input furnId=${entry.value.id} class="cart-plus-minus-box" type="text"
+                                                       name="qtybutton"
                                                        value="${entry.value.count}"/>
                                             </div>
                                         </td>
