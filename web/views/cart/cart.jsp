@@ -13,6 +13,11 @@
     <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
         $(function () {
+            //清空购物车绑定确认事件
+            $("a.clearCart").click(function () {
+                return window.confirm("你确认要清空购物车吗?")
+            })
+
             //给删除购物车绑定事件
             $("a.delItem").click(function () {
                 //获取要删除的家居名
@@ -186,7 +191,7 @@
                                 </div>
                                 <div class="cart-clear">
                                     <button>继 续 购 物</button>
-                                    <a href="#">清 空 购 物 车</a>
+                                    <a class="clearCart" href="cartServlet?action=clear">清 空 购 物 车</a>
                                 </div>
                             </div>
                         </div>

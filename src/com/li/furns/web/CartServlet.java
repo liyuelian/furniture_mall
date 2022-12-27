@@ -22,6 +22,24 @@ public class CartServlet extends BasicServlet {
     private FurnService furnService = new FurnServiceImpl();
 
     /**
+     * 清空购物车
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void clear(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //获取session的购物车
+        Cart cart = (Cart) req.getSession().getAttribute("cart");
+        if (null != cart) {
+            cart.clear();
+        }
+        //回到请求清空的购物车页面
+        resp.sendRedirect(req.getHeader("Referer"));
+    }
+
+    /**
      * 根据id删除购物车的某个家居信息
      *
      * @param req

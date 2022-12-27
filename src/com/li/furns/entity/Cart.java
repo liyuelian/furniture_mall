@@ -16,6 +16,13 @@ public class Cart {
     private HashMap<Integer, CartItem> items = new HashMap<>();
 
     /**
+     * 清空items
+     */
+    public void clear() {
+        items.clear();
+    }
+
+    /**
      * 根据家居id删除对应的cartItem
      *
      * @param id 家居id
