@@ -76,7 +76,7 @@
                 <div class="col align-self-center">
                     <div class="header-actions">
                         <div class="header-bottom-set dropdown">
-                            <a>欢迎: hello</a>
+                            <a>欢迎: ${sessionScope.member.username}</a>
                         </div>
                         <div class="header-bottom-set dropdown">
                             <a href="#">订单管理</a>
@@ -187,7 +187,7 @@
                             <div class="cart-shiping-update-wrapper">
                                 <h4>共${sessionScope.cart.totalCount}件商品 总价 ${sessionScope.cart.cartTotalPrice}元</h4>
                                 <div class="cart-shiping-update">
-                                    <a href="#">购 物 车 结 账</a>
+                                    <a href="orderServlet?action=saveOrder">购 物 车 - 生 成 订 单</a>
                                 </div>
                                 <div class="cart-clear">
                                     <button>继 续 购 物</button>

@@ -33,11 +33,9 @@ public class MemberServlet extends BasicServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        //构建一个member对象
-        Member member = new Member(null, username, password, null);
-
         //2.调用MemberServiceImpl的login方法
-        if (memberService.login(member) == null) {//数据库中没有该用户，返回登录页面
+        Member member = memberService.login(new Member(null, username, password, null));
+        if (member == null) {//数据库中没有该用户，返回登录页面
             //登录失败，将错误信息和登录会员名放入request域中
             request.setAttribute("errInfo", "登录失败，用户名或者密码错误");
             request.setAttribute("username", username);
@@ -100,10 +98,10 @@ public class MemberServlet extends BasicServlet {
         } else {//验证码不正确
             request.setAttribute("errInfo", "验证码不正确");
             //回显注册信息
-            request.setAttribute("username",username);
-            request.setAttribute("email",email);
+            request.setAttribute("username", username);
+            request.setAttribute("email", email);
             //带回一个信息，显示到注册选项页
-            request.setAttribute("active","register");
+            request.setAttribute("active", "register");
             request.getRequestDispatcher("/views/member/login.jsp")
                     .forward(request, response);
         }

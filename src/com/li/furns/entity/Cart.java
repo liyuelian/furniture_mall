@@ -15,6 +15,10 @@ public class Cart {
     //包含多个CartItem对象，使用HashMap来保存
     private HashMap<Integer, CartItem> items = new HashMap<>();
 
+    public boolean isEmpty() {
+        return items.size() == 0;
+    }
+
     /**
      * 清空items
      */
