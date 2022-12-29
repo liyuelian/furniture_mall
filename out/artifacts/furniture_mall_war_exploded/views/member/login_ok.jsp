@@ -37,7 +37,7 @@
                             <div class="dropdown_search">
                                 <form class="action-form" action="customerFurnServlet">
                                     <input type="hidden" name="action" value="pageByName">
-                                    <input class="form-control" name="furnName" placeholder="输入家居名搜索" type="text" >
+                                    <input class="form-control" name="furnName" placeholder="输入家居名搜索" type="text">
                                     <button class="submit" type="submit"><i class="icon-magnifier"></i></button>
                                 </form>
                             </div>
@@ -47,16 +47,16 @@
                             欢迎：${sessionScope.member.username}
                         </div>
                         <div class="header-bottom-set dropdown">
-                            <a href="#">订单管理</a>
+                            <a href="orderServlet?action=showOrder">订单管理</a>
                         </div>
                         <div class="header-bottom-set dropdown">
                             <a href="memberServlet?action=logout">安全退出</a>
                         </div>
                         <!-- Single Wedge End -->
-                        <a href="#offcanvas-cart"
-                           class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
+                        <a href="views/cart/cart.jsp"
+                           class="header-action-btn header-action-btn-cart pr-0">
                             <i class="icon-handbag"> 购物车</i>
-                            <span class="header-action-num">88</span>
+                            <span class="header-action-num">${sessionScope.cart.totalCount}</span>
                         </a>
                         <a href="#offcanvas-mobile-menu"
                            class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
@@ -76,7 +76,7 @@
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
                         <a href="index.jsp"><img width="280px" src="assets/images/logo/logo.png"
-                                                                alt="Site Logo"/></a>
+                                                 alt="Site Logo"/></a>
                     </div>
                 </div>
                 <!-- Header Logo End -->

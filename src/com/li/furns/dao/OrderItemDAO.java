@@ -2,6 +2,8 @@ package com.li.furns.dao;
 
 import com.li.furns.entity.OrderItem;
 
+import java.util.List;
+
 /**
  * OrderItemDAO表示一个订单项
  *
@@ -16,5 +18,13 @@ public interface OrderItemDAO {
      * @return
      */
     public int saveOrderItem(OrderItem orderItem);
+
+    /**
+     * 根据订单id-orderId查询对应的表单项orderItem
+     *
+     * @param orderId 订单id
+     * @return 返回表单项orderItem
+     */
+    public List<OrderItem> queryOrderItemByOrderId(String orderId);
 
 }

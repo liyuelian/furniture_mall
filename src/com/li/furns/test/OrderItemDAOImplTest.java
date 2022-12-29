@@ -6,6 +6,7 @@ import com.li.furns.entity.OrderItem;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @author 李
@@ -19,5 +20,13 @@ public class OrderItemDAOImplTest {
         OrderItem orderItem = new OrderItem(null, "北欧小沙发", new BigDecimal(200),
                 3, new BigDecimal(600), "sn000001");
         System.out.println(orderItemDAO.saveOrderItem(orderItem));
+    }
+
+    @Test
+    public void queryOrderItemByOrderId() {
+        List<OrderItem> orderItems = orderItemDAO.queryOrderItemByOrderId("16722358644142");
+        for (OrderItem orderItem : orderItems) {
+            System.out.println(orderItem);
+        }
     }
 }

@@ -9,10 +9,7 @@ import com.li.furns.dao.impl.OrderItemDAOImpl;
 import com.li.furns.entity.*;
 import com.li.furns.service.OrderService;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author 李
@@ -73,5 +70,15 @@ public class OrderServiceImpl implements OrderService {
         cart.clear();
         //返回生成的订单号
         return orderId;
+    }
+
+    @Override
+    public List<Order> queryOrderByMemberId(int id) {
+        return orderDAO.queryOrderByMemberId(id);
+    }
+
+    @Override
+    public List<OrderItem> queryOrderItemByOrderId(String orderId) {
+        return orderItemDAO.queryOrderItemByOrderId(orderId);
     }
 }

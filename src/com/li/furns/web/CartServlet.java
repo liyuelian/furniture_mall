@@ -95,6 +95,10 @@ public class CartServlet extends BasicServlet {
             return;
             //todo
         }
+        if (furn.getStock() == 0) {//如果该家居库存为0
+            resp.sendRedirect(req.getHeader("Referer"));
+            return;
+        }
         //根据furn构建CartItem
         CartItem item =
                 new CartItem(furn.getId(), furn.getName(), furn.getPrice(), 1, furn.getPrice());

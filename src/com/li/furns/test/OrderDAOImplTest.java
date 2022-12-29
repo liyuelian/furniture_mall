@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 李
@@ -20,5 +21,13 @@ public class OrderDAOImplTest {
         Order order = new Order("sn000002", new Date(),
                 new BigDecimal(300), 0, 1);
         System.out.println(orderDAO.saveOrder(order));
+    }
+
+    @Test
+    public void queryOrderByMemberId() {
+        List<Order> orders = orderDAO.queryOrderByMemberId(2);
+        for (Order order : orders) {
+            System.out.println(order);
+        }
     }
 }

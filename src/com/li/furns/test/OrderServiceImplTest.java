@@ -2,11 +2,14 @@ package com.li.furns.test;
 
 import com.li.furns.entity.Cart;
 import com.li.furns.entity.CartItem;
+import com.li.furns.entity.Order;
+import com.li.furns.entity.OrderItem;
 import com.li.furns.service.OrderService;
 import com.li.furns.service.impl.OrderServiceImpl;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @author 李
@@ -23,5 +26,21 @@ public class OrderServiceImplTest {
         cart.addItem(new CartItem(26, "简约风格小椅子", new BigDecimal(100), 5, new BigDecimal(500)));
         String orderId = orderService.saveOrder(cart, 2);
         System.out.println(orderId);
+    }
+
+    @Test
+    public void queryOrderByMemberId() {
+        List<Order> orders = orderService.queryOrderByMemberId(3);
+        for (Order order : orders) {
+            System.out.println(order);
+        }
+    }
+
+    @Test
+    public void queryOrderItemByOrderId() {
+        List<OrderItem> orderItems = orderService.queryOrderItemByOrderId("16722370522643");
+        for (OrderItem orderItem : orderItems) {
+            System.out.println(orderItem);
+        }
     }
 }

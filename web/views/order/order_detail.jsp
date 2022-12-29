@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
     <link rel="stylesheet" href="assets/css/style.min.css"/>
-
 </head>
+
 <body>
 <!-- Header Area start  -->
 <div class="header section">
@@ -31,37 +31,15 @@
                 <!-- Header Action Start -->
                 <div class="col align-self-center">
                     <div class="header-actions">
-                        <div class="header_account_list">
-                            <a href="javascript:void(0)" class="header-action-btn search-btn"><i
-                                    class="icon-magnifier"></i></a>
-                            <div class="dropdown_search">
-                                <form class="action-form" action="customerFurnServlet">
-                                    <input type="hidden" name="action" value="pageByName">
-                                    <input class="form-control" name="furnName" placeholder="输入家居名搜索" type="text">
-                                    <button class="submit" type="submit"><i class="icon-magnifier"></i></button>
-                                </form>
-                            </div>
-                        </div>
-                        <!-- Single Wedge Start -->
                         <div class="header-bottom-set dropdown">
-                            欢迎：${sessionScope.member.username}
+                            <a>欢迎: ${sessionScope.member.username}</a>
                         </div>
                         <div class="header-bottom-set dropdown">
-                            <a href="orderServlet?action=showOrder">订单管理</a>
+                            <a href="#">订单管理</a>
                         </div>
                         <div class="header-bottom-set dropdown">
-                            <a href="memberServlet?action=logout">安全退出</a>
+                            <a href="#">安全退出</a>
                         </div>
-                        <!-- Single Wedge End -->
-                        <a href="views/cart/cart.jsp"
-                           class="header-action-btn header-action-btn-cart pr-0">
-                            <i class="icon-handbag"> 购物车</i>
-                            <span class="header-action-num">${sessionScope.cart.totalCount}</span>
-                        </a>
-                        <a href="#offcanvas-mobile-menu"
-                           class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
-                            <i class="icon-menu"></i>
-                        </a>
                     </div>
                 </div>
                 <!-- Header Action End -->
@@ -76,7 +54,7 @@
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
                         <a href="index.jsp"><img width="280px" src="assets/images/logo/logo.png"
-                                                 alt="Site Logo"/></a>
+                                                  alt="Site Logo"/></a>
                     </div>
                 </div>
                 <!-- Header Logo End -->
@@ -88,25 +66,67 @@
     <!-- Main Menu End -->
 </div>
 <!-- Header Area End  -->
-<!-- login area start -->
-<div class="login-register-area pt-70px pb-100px">
+
+<!-- OffCanvas Cart Start -->
+
+<!-- OffCanvas Cart End -->
+
+<!-- OffCanvas Menu Start -->
+
+<!-- OffCanvas Menu End -->
+
+
+<!-- breadcrumb-area start -->
+
+
+<!-- breadcrumb-area end -->
+
+<!-- Cart Area Start -->
+<div class="cart-main-area pt-100px pb-100px">
     <div class="container">
+        <h3 class="cart-page-title">订单-${requestScope.orderId}</h3>
         <div class="row">
-            <div class="col-lg-7 col-md-12 ml-auto mr-auto">
-                <div class="login-register-wrapper">
-                    <div class="login-register-tab-list nav">
-                        <a class="active" href="index.jsp">
-                            <%--这里需要走web/index.jsp
-                            而不是web/views/customer/index.jsp--%>
-                            <h4>登录成功, 返回首页</h4>
-                        </a>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <form action="#">
+                    <div class="table-content table-responsive cart-table-content">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>家居名</th>
+                                <th>单价</th>
+                                <th>数量</th>
+                                <th>金额</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${requestScope.orderItems}" var="orderItem">
+                                <tr>
+                                    <td class="product-name"><a href="#">${orderItem.name}</a></td>
+                                    <td class="product-price-cart"><span class="amount">${orderItem.price}</span></td>
+                                    <td class="product-quantity">${orderItem.count}</td>
+                                    <td class="product-subtotal">${orderItem.totalPrice}</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="cart-shiping-update-wrapper">
+                                <h4>共${requestScope.totalCount}件商品 总价 ${requestScope.totalPrice}元</h4>
+                                <div class="cart-clear">
+                                    <a href="#">继 续 购 物</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>
 </div>
-<!-- login area end -->
+<!-- Cart Area End -->
 
 <!-- Footer Area Start -->
 <div class="footer-area">
@@ -145,7 +165,7 @@
                                         <li class="li"><a class="single-link" href="my-account.html">我的账号</a>
                                         </li>
                                         <li class="li"><a class="single-link" href="cart.html">我的购物车</a></li>
-                                        <li class="li"><a class="single-link" href="login.jsp">登录</a></li>
+                                        <li class="li"><a class="single-link" href="login.html">登录</a></li>
                                         <li class="li"><a class="single-link" href="wishlist.html">感兴趣的</a></li>
                                         <li class="li"><a class="single-link" href="checkout.html">结账</a></li>
                                     </ul>

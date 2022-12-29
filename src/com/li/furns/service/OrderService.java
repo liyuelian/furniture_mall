@@ -1,6 +1,10 @@
 package com.li.furns.service;
 
 import com.li.furns.entity.Cart;
+import com.li.furns.entity.Order;
+import com.li.furns.entity.OrderItem;
+
+import java.util.List;
 
 /**
  * @author 李
@@ -17,4 +21,20 @@ public interface OrderService {
      * @return 返回生成的订单号
      */
     public String saveOrder(Cart cart, int memberId);
+
+    /**
+     * 根据用户id返回订单order
+     *
+     * @param id 用户id
+     * @return 订单
+     */
+    public List<Order> queryOrderByMemberId(int id);
+
+    /**
+     * 根据订单id返回对应的订单项orderItem
+     *
+     * @param orderId 订单id
+     * @return 返回订单项
+     */
+    public List<OrderItem> queryOrderItemByOrderId(String orderId);
 }

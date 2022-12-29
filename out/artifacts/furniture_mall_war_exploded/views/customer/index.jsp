@@ -70,7 +70,7 @@
                                 <a> 欢迎：${sessionScope.member.username}</a>
                             </div>
                             <div class="header-bottom-set dropdown">
-                                <a href="#">订单管理</a>
+                                <a href="orderServlet?action=showOrder">订单管理</a>
                             </div>
                             <div class="header-bottom-set dropdown">
                                 <a href="memberServlet?action=logout">安全退出</a>
@@ -157,9 +157,16 @@
                                                    data-bs-target="#exampleModal"><i
                                                         class="icon-size-fullscreen"></i></a>
                                             </div>
-                                            <button title="Add To Cart" class="add-to-cart" furnId="${furn.id}">
-                                                Add To Cart
-                                            </button>
+                                            <c:if test="${furn.stock > 0 }">
+                                                <button title="Add To Cart" class="add-to-cart" furnId="${furn.id}">
+                                                    Add To Cart
+                                                </button>
+                                            </c:if>
+                                            <c:if test="${furn.stock ==0 }">
+                                                <button title="Add To Cart" class="add-to-cart" furnId="${furn.id}" style="color: #a1a0a0">
+                                                    缺货
+                                                </button>
+                                            </c:if>
                                         </div>
                                         <div class="content">
                                             <h5 class="title">
