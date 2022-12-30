@@ -3,6 +3,33 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>com.li.furns.filter.AuthFilter</filter-class>
+        <init-param>
+            <!--这里配置之后，还需要在过滤器中编写规则放行-->
+            <param-name>excludedUrls</param-name>
+            <param-value>/views/manage/manage_login.jsp,/views/member/login.jsp</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <!--配置过滤器匹配url
+        1.在url-pattern中配置要拦截的url
+        2.需要拦截的url中也要分情况考虑，
+        比如/views/manage/下除了manage_login.jsp外都要拦截
+        对于这种在被拦截目录下但又需要放行的资源，我们可以在init-param中配置指定
+        -->
+        <url-pattern>/views/cart/*</url-pattern>
+        <url-pattern>/views/manage/*</url-pattern>
+        <url-pattern>/views/member/*</url-pattern>
+        <url-pattern>/views/order/*</url-pattern>
+        <url-pattern>/cartServlet</url-pattern>
+        <url-pattern>/manage/furnServlet</url-pattern>
+        <url-pattern>/orderServlet</url-pattern>
+    </filter-mapping>
+
+
     <!--<servlet>-->
     <!--    <servlet-name>RegisterServlet</servlet-name>-->
     <!--    <servlet-class>com.li.furns.web.RegisterServlet</servlet-class>-->

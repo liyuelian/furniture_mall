@@ -20,7 +20,7 @@ public class MemberServlet extends BasicServlet {
     private MemberService memberService = new MemberServiceImpl();
 
     /**
-     * 处理会员登录业务
+     * 处理会员和管理员的登录业务
      *
      * @param request
      * @param response
@@ -48,9 +48,15 @@ public class MemberServlet extends BasicServlet {
             session.setMaxInactiveInterval(1800);//设置生命周期为30分钟
             //将得到的member对象放入session域对象中
             session.setAttribute("member", member);
-            //跳转到登录成功页面
-            request.getRequestDispatcher("/views/member/login_ok.jsp")
-                    .forward(request, response);
+            if ("admin".equals(member.getUsername())) {
+                //跳转到登录成功页面
+                request.getRequestDispatcher("/views/manage/manage_menu.jsp")
+                        .forward(request, response);
+            } else {
+                //跳转到登录成功页面
+                request.getRequestDispatcher("/views/member/login_ok.jsp")
+                        .forward(request, response);
+            }
         }
     }
 

@@ -65,7 +65,7 @@
                         <div id="lg1" class="tab-pane active">
                             <div class="login-form-container">
                                 <div class="login-register-form">
-                                    <form action="adminServlet" method="post">
+                                    <form action="memberServlet" method="post">
                                         <%--提示错误信息--%>
                                         <span class="errorMsg"
                                               style="float: right; font-weight: bold; font-size: 20pt; margin-left: 10px;">
