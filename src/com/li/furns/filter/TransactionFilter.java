@@ -30,7 +30,9 @@ public class TransactionFilter implements Filter {
             //只有在try{}中出现了异常，才会进行catch{}
             //这里想要捕获异常，前提是底层的代码没有将抛出的异常捕获
             JDBCUtilsByDruid.rollback();//回滚
-            e.printStackTrace();
+            //抛出异常该tomcat，tomcat会根据errorpage来显示对应的页面
+            throw new RuntimeException(e);
+            //e.printStackTrace();
         }
     }
 }
