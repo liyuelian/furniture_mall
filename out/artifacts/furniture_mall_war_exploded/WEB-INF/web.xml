@@ -29,7 +29,15 @@
         <url-pattern>/orderServlet</url-pattern>
     </filter-mapping>
 
-
+    <filter>
+        <filter-name>TransactionFilter</filter-name>
+        <filter-class>com.li.furns.filter.TransactionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>TransactionFilter</filter-name>
+        <!--这里我们对所有请求都进行事务管理-->
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <!--<servlet>-->
     <!--    <servlet-name>RegisterServlet</servlet-name>-->
     <!--    <servlet-class>com.li.furns.web.RegisterServlet</servlet-class>-->

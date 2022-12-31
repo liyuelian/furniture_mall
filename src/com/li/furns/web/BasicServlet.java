@@ -47,7 +47,9 @@ public abstract class BasicServlet extends HttpServlet {
             declaredMethod.invoke(this, req, resp);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            //将发生的异常抛出给Filter
+            //异常机制是可以参与业务逻辑的
+            throw new RuntimeException(e);
         }
     }
 

@@ -35,8 +35,6 @@ public class BasicDAO<T> {//泛型指定具体的类型
 
         } catch (SQLException e) {
             throw new RuntimeException(e);//将一个编译异常转变为运行异常
-        } finally {
-            JDBCUtilsByDruid.close(null, null, connection);
         }
     }
 
@@ -56,8 +54,6 @@ public class BasicDAO<T> {//泛型指定具体的类型
 
         } catch (SQLException e) {
             throw new RuntimeException(e);//将一个编译异常转变为运行异常
-        } finally {
-            JDBCUtilsByDruid.close(null, null, connection);
         }
     }
 
@@ -70,8 +66,6 @@ public class BasicDAO<T> {//泛型指定具体的类型
 
         } catch (SQLException e) {
             throw new RuntimeException(e);//将一个编译异常转变为运行异常
-        } finally {
-            JDBCUtilsByDruid.close(null, null, connection);
         }
     }
 
@@ -84,8 +78,6 @@ public class BasicDAO<T> {//泛型指定具体的类型
 
         } catch (SQLException e) {
             throw new RuntimeException(e);//将一个编译异常转变为运行异常
-        } finally {
-            JDBCUtilsByDruid.close(null, null, connection);
         }
     }
 }
