@@ -1,5 +1,6 @@
 package com.li.furns.web;
 
+import com.google.gson.Gson;
 import com.li.furns.entity.Member;
 import com.li.furns.service.MemberService;
 import com.li.furns.service.impl.MemberServiceImpl;
@@ -7,6 +8,7 @@ import com.li.furns.service.impl.MemberServiceImpl;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.util.HashMap;
 
 import static com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY;
 
@@ -18,6 +20,34 @@ import static com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY;
  */
 public class MemberServlet extends BasicServlet {
     private MemberService memberService = new MemberServiceImpl();
+
+    /**
+     * 校验某个用户名是否已经存在数据库中
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void isExistUserName(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //1.获取用户名
+        String username = req.getParameter("username");
+        //2.调用service
+        boolean isExistUsername = memberService.isExistsUsername(username);
+        //3.返回json格式[按照前端的需求]
+        //{"isExist":false}
+        //先使用最简单的拼接，一会使用可拓展的方式
+        //String resultJson = "{\"isExist\":" + isExistUsername + "}";
+
+        //=>将要返回的数据返回map=>json
+        //使用map可以方便拓展
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap.put("isExist", isExistUsername);
+        String resultJson = new Gson().toJson(resultMap);
+
+        //4.返回json
+        resp.getWriter().write(resultJson);
+    }
 
     /**
      * 处理会员和管理员的登录业务

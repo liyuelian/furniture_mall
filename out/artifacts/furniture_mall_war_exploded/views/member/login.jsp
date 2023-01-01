@@ -16,6 +16,30 @@
     <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
         $(function () {//页面加载完毕后执行的function
+
+            //给注册模块的用户名输入框绑定一个失去焦点事件
+            $("#username").blur(function () {
+                //获取输入的用户名
+                var username = this.value;
+                //发出ajax请求（使用jquery的$.getJSON()）
+                //jQuery.getJSON(url,data,success(data,status,xhr))
+                $.getJSON(
+                    "memberServlet",
+                    //使用json格式发送数据
+                    {
+                        "action": "isExistUserName",
+                        "username": username,
+                    },
+                    function (data) {
+                        if (data.isExist) {
+                            $("span.errorMsg").text("用户名已经存在，不能使用");
+                        } else {
+                            $("span.errorMsg").text("用户名可用");
+                        }
+                    })
+            })
+
+
             //直接在页面的structure结构中找到对应的注册接口==>id="sub-btn"
             //ctrl+home 定位到页面最上方
             //ctrl+end 定位到页面最下方
