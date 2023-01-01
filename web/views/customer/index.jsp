@@ -20,7 +20,26 @@
                 //获取到点击的furn-id
                 var furnId = $(this).attr("furnId");
                 //发出一个请求-添加家居=>后面改成ajax
-                location.href = "cartServlet?action=addItem&id=" + furnId;
+                //location.href = "cartServlet?action=addItem&id=" + furnId;
+
+                //改为ajax请求，得到数据进行局部刷新，解决刷新这个页面的效率低的问题
+                //jQuery.getJSON(url,data,success(data,status,xhr))
+                $.getJSON(
+                    "cartServlet",
+                    {
+                        "action": "addItemByAjax",
+                        "id": furnId
+                    },
+                    function (data) {
+                        if (data.url == undefined) {
+                            //说明没有返回url,过滤器没有让跳转到登录页面，即说明已经登录过了
+                            $("span.header-action-num").text(data.cartTotalCount);
+                        } else {
+                            //否则说明当前服务器返回了url，要求定位
+                            location.href = data.url;
+                        }
+                    }
+                )
             })
         })
     </script>
@@ -163,7 +182,8 @@
                                                 </button>
                                             </c:if>
                                             <c:if test="${furn.stock ==0 }">
-                                                <button title="Add To Cart" class="add-to-cart" furnId="${furn.id}" style="color: #a1a0a0">
+                                                <button title="Add To Cart" class="add-to-cart" furnId="${furn.id}"
+                                                        style="color: #a1a0a0">
                                                     缺货
                                                 </button>
                                             </c:if>

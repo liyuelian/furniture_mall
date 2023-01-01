@@ -1,11 +1,14 @@
 package com.li.furns.filter;
 
+import com.google.gson.Gson;
 import com.li.furns.entity.Member;
+import com.li.furns.utils.WebUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -27,7 +30,6 @@ public class AuthFilter implements Filter {
         //将splitUrl转成List,赋给excludedUrls
         excludedUrls = Arrays.asList(splitUrl);
         System.out.println("excludedUrls=>" + excludedUrls);
-
     }
 
     public void destroy() {
@@ -45,10 +47,19 @@ public class AuthFilter implements Filter {
             //得到session中的member对象
             Member member = (Member) req.getSession().getAttribute("member");
             if (member == null) {//说明用户没有登录过
-                //转发到登录页面
-                //不要使用重定向，因为重定向的url符合过滤器规则时也会被拦截，
-                //如果设置不合理就会出现 请求无线循环重定向的 情况
-                req.getRequestDispatcher("/views/member/login.jsp").forward(request, response);
+                //先判断该请求是否为Ajax请求
+                if (!WebUtils.isAjaxRequest(req)) {//不是ajax请求
+                    //转发到登录页面
+                    //不要使用重定向，因为重定向的url符合过滤器规则时也会被拦截，
+                    //如果设置不合理就会出现 请求无线循环重定向的 情况
+                    req.getRequestDispatcher("/views/member/login.jsp").forward(request, response);
+                } else {//如果是ajax请求
+                    //以json格式返回一个url
+                    HashMap<String, Object> resultMap = new HashMap<>();
+                    resultMap.put("url", "views/member/login.jsp");
+                    String resultJson = new Gson().toJson(resultMap);
+                    response.getWriter().write(resultJson);
+                }
                 return;//返回
             }
         }
