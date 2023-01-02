@@ -10,6 +10,35 @@
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
     <link rel="stylesheet" href="assets/css/style.min.css">
+    <style type="text/css">
+        #pic {
+            position: relative;
+        }
+
+        input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 150px;
+            opacity: 0;
+            cursor: pointer;
+        }
+    </style>
+    <script type="text/javascript">
+        function prev(event) {
+            //获取展示图片的区域
+            var img = document.getElementById("prevView");
+            //获取文件对象
+            let file = event.files[0];
+            //获取文件阅读器
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                //给 img 的 src 设置图片 url
+                img.setAttribute("src", this.result);
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -23,7 +52,7 @@
                 <!-- Header Logo Start -->
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
-                        <a href="index.html"><img src="assets/images/logo/logo.png" alt="Site Logo"/></a>
+                        <a href="index.jsp"><img src="assets/images/logo/logo.png" alt="Site Logo"/></a>
                     </div>
                 </div>
                 <!-- Header Logo End -->
@@ -53,7 +82,7 @@
                 <!-- Header Logo Start -->
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
-                        <a href="index.html"><img width="280px" src="assets/images/logo/logo.png" alt="Site Logo"/></a>
+                        <a href="index.jsp"><img width="280px" src="assets/images/logo/logo.png" alt="Site Logo"/></a>
                     </div>
                 </div>
                 <!-- Header Logo End -->
@@ -70,13 +99,15 @@
         <h3 class="cart-page-title">家居后台管理-修改家居</h3>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                <form action="manage/furnServlet" method="post">
+                <form
+                        action="manage/furnServlet?id=${requestScope.furn.id}&action=update&pageNo=${param.pageNo}"
+                        method="post" enctype="multipart/form-data">
                     <%--使用隐藏域将id传递出去--%>
-                    <input type="hidden" name="id" value="${requestScope.furn.id}">
-                    <%--将action的值传递出去--%>
-                    <input type="hidden" name="action" value="update">
-                    <%--将pageNo的值传递出去--%>
-                    <input type="hidden" name="pageNo" value="${param.pageNo}">
+                    <%--<input type="hidden" name="id" value="${requestScope.furn.id}">--%>
+                    <%--&lt;%&ndash;将action的值传递出去&ndash;%&gt;--%>
+                    <%--<input type="hidden" name="action" value="update">--%>
+                    <%--&lt;%&ndash;将pageNo的值传递出去&ndash;%&gt;--%>
+                    <%--<input type="hidden" name="pageNo" value="${param.pageNo}">--%>
                     <div class="table-content table-responsive cart-table-content">
                         <table>
                             <thead>
@@ -93,9 +124,14 @@
                             <tbody>
                             <tr>
                                 <td class="product-thumbnail">
-                                    <a href="#"><img class="img-responsive ml-3"
-                                                     src="assets/images/product-image/default.jpg"
-                                                     alt=""/></a>
+                                    <div id="pic">
+                                        <img id="prevView"
+                                             class="img-responsive ml-3"
+                                             src="${requestScope.furn.imgPath}"
+                                             alt=""/>
+                                        <input type="file" name="imgPath" id="" value="${requestScope.furn.imgPath}"
+                                               onchange="prev(this)"/>
+                                    </div>
                                 </td>
                                 <td class="product-name"><input name="name" style="width: 60%" type="text"
                                                                 value="${requestScope.furn.name}"/></td>
