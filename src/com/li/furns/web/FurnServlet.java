@@ -217,8 +217,7 @@ public class FurnServlet extends BasicServlet {
                             //  这样可以将不同日期上传的文件放到不同目录下，
                             //  防止一个文件夹存放的文件过多造成访问速度变慢
                             File fileRealPathDirectory =
-                                    new File(fileRealPath);
-
+                                    new File(fileRealPath + WebUtils.getYearMonthDay());
                             if (!fileRealPathDirectory.exists()) {//如果文件目录不存在
                                 fileRealPathDirectory.mkdirs();//创建
                             }
@@ -232,8 +231,18 @@ public class FurnServlet extends BasicServlet {
 
                             fileItem.getOutputStream().close();//关闭流
 
-                            //更新家居的文件图片路径
-                            furn.setImgPath(WebUtils.FURN_IMG_DIRECTORY + "/" + name);
+                            //获取旧的家居文件图片路径
+                            String oldImgPath = furn.getImgPath();
+                            //获取旧图片的绝对路径
+                            String oldImgRealPath = req.getServletContext().getRealPath(oldImgPath);
+                            //删除内存中旧的图片，防止图片占用空间过大
+                            File file = new File(oldImgRealPath);
+                            if (file.exists()) {
+                                file.delete();//删除旧图片
+                            }
+
+                            //更新数据库中家居的图片路径
+                            furn.setImgPath(WebUtils.FURN_IMG_DIRECTORY + WebUtils.getYearMonthDay() + "/" + name);
                         }
                     }
                 }
