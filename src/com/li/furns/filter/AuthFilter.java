@@ -61,6 +61,12 @@ public class AuthFilter implements Filter {
                     response.getWriter().write(resultJson);
                 }
                 return;//返回
+            } else {//否则说明用户已经登录过了
+                if (!member.getUsername().equals("admin") && url.contains("/manage/")) {
+                    //如果该用户不是admin但请求的url属于后台管理，就将其转发到首页
+                    req.getRequestDispatcher("/index.jsp").forward(request, response);
+                    return;//返回
+                }
             }
         }
         //否则就放行
