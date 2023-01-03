@@ -231,8 +231,33 @@
               先确定开始页数 begin 第一页
               再确定结束页数 end 第page.TotalCount页
         --%>
-        <c:set var="begin" value="1"/>
-        <c:set var="end" value="${requestScope.page.pageTotalCount}"/>
+        <c:choose>
+            <%--如果总页数<=5，就显示全部页数--%>
+            <c:when test="${requestScope.page.pageTotalCount <= 5}">
+                <c:set var="begin" value="1"/>
+                <c:set var="end" value="${requestScope.page.pageTotalCount}"/>
+            </c:when>
+            <%--如果总页数>5，就按照如下规则显示--%>
+            <c:when test="${requestScope.page.pageTotalCount > 5}">
+                <c:choose>
+                    <%--如果 当前页数 是前3页，就显示1-5页--%>
+                    <c:when test="${requestScope.page.pageNo <= 3}">
+                        <c:set var="begin" value="1"/>
+                        <c:set var="end" value="5"/>
+                    </c:when>
+                    <%--如果 当前页数 是后3页，就显示最后5页--%>
+                    <c:when test="${requestScope.page.pageNo > requestScope.page.pageTotalCount -3}">
+                        <c:set var="begin" value="${requestScope.page.pageTotalCount - 4}"/>
+                        <c:set var="end" value="${requestScope.page.pageTotalCount}"/>
+                    </c:when>
+                    <%--如果 当前页数 是中间页，就显示 当前页的前2页，当前页，当前页的后2页 即可--%>
+                    <c:otherwise>
+                        <c:set var="begin" value="${requestScope.page.pageNo - 2}"/>
+                        <c:set var="end" value="${requestScope.page.pageNo + 2}"/>
+                    </c:otherwise>
+                </c:choose>
+            </c:when>
+        </c:choose>
         <c:forEach begin="${begin}" end="${end}" var="i">
             <%--如果i为当前页，就使用class=active来修饰--%>
             <c:if test="${i==requestScope.page.pageNo}">
